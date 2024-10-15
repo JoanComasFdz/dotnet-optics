@@ -14,7 +14,7 @@ public static class LibraryExtensions
 
     public static LensWrapper<Library, IReadOnlyList<Book>> BooksLens(this Library library)
     {
-        var booksLens = LibraryLenses.BooksLens();
+        var booksLens = LibraryLenses.LibraryToBooksLens();
 
         return new LensWrapper<Library, IReadOnlyList<Book>>(library, booksLens);
     }
@@ -28,7 +28,7 @@ public static class LibraryExtensions
     public static LensWrapper<Library, IReadOnlyList<Chapter>> ChaptersLens(this LensWrapper<Library, Book> wrapper)
     {
         // Create the lens for accessing the Chapter collection within the Book
-        var chaptersLens = LibraryLenses.ChaptersLens();
+        var chaptersLens = LibraryLenses.BookToChaptersLens();
 
         // Compose the current Lens (from Library to Book) with the new Lens (from Book to Chapters)
         var composedLens = wrapper.Lens.Compose(chaptersLens);
@@ -51,7 +51,7 @@ public static class LibraryExtensions
 
     public static LensWrapper<Library, IReadOnlyList<Page>> PagesLens(this LensWrapper<Library, Chapter> wrapper)
     {
-        var pagesLens = LibraryLenses.PagesLens();
+        var pagesLens = LibraryLenses.ChapterToPagesLens();
 
         // Compose the existing Lens from Library -> Chapter with the new Lens Chapter -> Pages
         var composedLens = wrapper.Lens.Compose(pagesLens);

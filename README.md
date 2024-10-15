@@ -57,7 +57,7 @@ return library
 ## How does the enchanced API work?
 
 ## Future work
-- [ ] Add examples to remove items from collections.
+- [x] Add examples to remove items from collections.
 - [ ] Further enhance the API to pass only the actual item to be filtered by, like: `library.BookLens(bookISDN)`.
 - [ ] Investigate simplifying lens declaration: https://stackoverflow.com/questions/68012124/record-lenses-expression-tree-for-with-expression
 - [ ] Move example code to a unit testing project.

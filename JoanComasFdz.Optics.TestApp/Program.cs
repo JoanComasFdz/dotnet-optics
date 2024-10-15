@@ -29,7 +29,7 @@ var library = new Library(
     ]
 );
 
-Console.WriteLine("===  ADDING ITEMS ===");
+Console.WriteLine("=== ADDING ITEMS ===");
 
 Console.WriteLine("Add a new book to the library");
 var l1 = CasesUsingJustWith.AddBookToLibrary(library);
@@ -52,7 +52,9 @@ l3 = CasesUsingEnhancedApi.AddPageToChapterOfBook(library, "1234", 1);
 AssertEqual(l1, l2);
 AssertEqual(l2, l3);
 
-Console.WriteLine("===  UPDATING ITEMS ===");
+
+
+Console.WriteLine("=== UPDATING ITEMS ===");
 
 Console.WriteLine("Update title of book 1234.");
 l1 = CasesUsingJustWith.UpdateBookTitle(library, "1234", "Program nicely");
@@ -76,6 +78,29 @@ AssertEqual(l1, l2);
 AssertEqual(l2, l3);
 
 
+
+Console.WriteLine("=== REMOVING ITEMS ===");
+
+Console.WriteLine("Remove the book 1234 from the library.");
+l1 = CasesUsingJustWith.RemoveBookFromLibrary(library, "1234");
+l2 = CasesUsingHardcodedLenses.RemoveBookFromLibrary(library, "1234");
+l3 = CasesUsingEnhancedApi.RemoveBookFromLibrary(library, "1234");
+AssertEqual(l1, l2);
+AssertEqual(l2, l3);
+
+Console.WriteLine("Remove the chapter 1 of the book 1234 from the library.");
+l1 = CasesUsingJustWith.RemoveChapterFromBook(library, "1234", 1);
+l2 = CasesUsingHardcodedLenses.RemoveChapterFromBook(library, "1234", 1);
+l3 = CasesUsingEnhancedApi.RemoveChapterFromBook(library, "1234", 1);
+AssertEqual(l1, l2);
+AssertEqual(l2, l3);
+
+Console.WriteLine("Remove the page 1 of the chapter 1 of the book 1234 from the library.");
+l1 = CasesUsingJustWith.RemovePageFromChapterOfBook(library, "1234", 1, 1);
+l2 = CasesUsingHardcodedLenses.RemovePageFromChapterOfBook(library, "1234", 1, 1);
+l3 = CasesUsingEnhancedApi.RemovePageFromChapterOfBook(library, "1234", 1, 1);
+AssertEqual(l1, l2);
+AssertEqual(l2, l3);
 
 static void AssertEqual(Library l1, Library l2)
 {

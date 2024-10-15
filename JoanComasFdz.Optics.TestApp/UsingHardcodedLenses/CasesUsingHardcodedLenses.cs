@@ -23,7 +23,7 @@ public static class CasesUsingHardcodedLenses
             ]
         );
 
-        return BooksLens().Mutate(library, books => [.. books, secondBook]);
+        return LibraryToBooksLens().Mutate(library, books => [.. books, secondBook]);
     }
 
     public static Library AddChapterToBook(Library library, string bookISDN)
@@ -37,7 +37,7 @@ public static class CasesUsingHardcodedLenses
         );
 
         return LibraryToBookLens(book => book.ISDN == bookISDN)
-            .Compose(ChaptersLens())
+            .Compose(BookToChaptersLens())
             .Mutate(library, chapters => [.. chapters, secondChapter]);
     }
 
@@ -45,7 +45,7 @@ public static class CasesUsingHardcodedLenses
     {
         return LibraryToBookLens(book => book.ISDN == bookISDN)
             .Compose(BookToChapterLens(chapter => chapter.Number == chapterNumber))
-            .Compose(PagesLens())
+            .Compose(ChapterToPagesLens())
             .Mutate(library, pages => [.. pages, new Page(2, "Page 2 Content")]);
     }
 
@@ -68,5 +68,25 @@ public static class CasesUsingHardcodedLenses
             .Compose(BookToChapterLens(chapter => chapter.Number == pageNumber))
             .Compose(ChapterToPageLens(page => page.Number == chapterNumber))
             .Mutate(library, page => page with { Content = newContent });
+    }
+
+    public static Library RemoveBookFromLibrary(Library library, string bookISDN)
+    {
+        return LibraryToBooksLens().Mutate(library, books => books.Where(book => book.ISDN != bookISDN).ToArray());
+    }
+
+    public static Library RemoveChapterFromBook(Library library, string bookISDN, int chapterNumber)
+    {
+        return LibraryToBookLens(book => book.ISDN == bookISDN)
+            .Compose(BookToChaptersLens())
+            .Mutate(library, chapters => chapters.Where(chapter => chapter.Number != chapterNumber).ToArray());
+    }
+
+    public static Library RemovePageFromChapterOfBook(Library library, string bookISDN, int chapterNumber, int pageNumber)
+    {
+        return LibraryToBookLens(book => book.ISDN == bookISDN)
+            .Compose(BookToChapterLens(chapter => chapter.Number == chapterNumber))
+            .Compose(ChapterToPagesLens())
+            .Mutate(library, pages => pages.Where(page => page.Number != pageNumber).ToArray());
     }
 }

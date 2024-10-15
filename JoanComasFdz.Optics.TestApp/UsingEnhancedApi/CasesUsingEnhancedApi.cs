@@ -74,4 +74,24 @@ public static class CasesUsingEnhancedApi
             .PageLens(page => page.Number == pageNumber)
             .With(page => page with { Content = newContent });
     }
+
+    public static Library RemoveBookFromLibrary(Library library, string bookISDN)
+    {
+        return library.BooksLens().With(books => books.Where(book => book.ISDN != bookISDN).ToArray());
+    }
+
+    public static Library RemoveChapterFromBook(Library library, string bookISDN, int chapterNumber)
+    {
+        return library.BookLens(book => book.ISDN == bookISDN)
+            .ChaptersLens()
+            .With(chapers => chapers.Where(chapter => chapter.Number != chapterNumber).ToArray());
+    }
+
+    public static Library RemovePageFromChapterOfBook(Library library, string bookISDN, int chapterNumber, int pageNumber)
+    {
+        return library.BookLens(book => book.ISDN == bookISDN)
+            .ChapterLens(chapter => chapter.Number == chapterNumber)
+            .PagesLens()
+            .With(pages => pages.Where(page =>  page.Number != pageNumber).ToArray());
+    }
 }

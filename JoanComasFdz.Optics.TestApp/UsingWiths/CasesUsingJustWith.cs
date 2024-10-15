@@ -210,4 +210,72 @@ internal static class CasesUsingJustWith
                 : book).ToArray()
         };
     }
+
+    public static Library RemoveBookFromLibrary(Library library, string bookISDN)
+    {
+        return library with
+        {
+            Books = library.Books.Where(book => book.ISDN != bookISDN).ToArray()
+        };
+    }
+
+    public static Library RemoveChapterFromBook(Library library, string bookISDN, int chapterNumber)
+    {
+        var bookToUpdate = library.Books.Single(b => b.ISDN == bookISDN);
+        var updatedBook = bookToUpdate with
+        {
+            Chapters = bookToUpdate.Chapters.Where(chapter => chapter.Number != chapterNumber).ToArray()
+        };
+        var updatedLibrary = library with
+        {
+            Books = library.Books.Select(book => book.ISDN == bookISDN ? updatedBook : book).ToArray()
+        };
+        return updatedLibrary;
+
+        // Single statement
+        return library with
+        {
+            Books = library.Books.Select(book => book.ISDN == bookISDN
+                ? book with
+                {
+                    Chapters = book.Chapters.Where(chapter => chapter.Number != chapterNumber).ToArray()
+                }
+                : book).ToArray()
+        };
+    }
+
+    public static Library RemovePageFromChapterOfBook(Library library, string bookISDN, int chapterNumber, int pageNumber)
+    {
+        var bookToUpdate = library.Books.Single(b => b.ISDN == bookISDN);
+        var chapterToUpdate = bookToUpdate.Chapters.Single(chapter => chapter.Number == chapterNumber);
+        var updatedChapter = chapterToUpdate with
+        {
+            Pages = chapterToUpdate.Pages.Where(page => page.Number != pageNumber).ToArray()
+        };
+        var updatedBook = bookToUpdate with
+        {
+            Chapters = bookToUpdate.Chapters.Select(chapter => chapter.Number == chapterNumber ? updatedChapter : chapter).ToArray()
+        };
+        var updatedLibrary = library with
+        {
+            Books = library.Books.Select(book => book.ISDN == bookISDN ? updatedBook : book).ToArray()
+        };
+        return updatedLibrary;
+
+        // Single statement
+        return library with
+        {
+            Books = library.Books.Select(book => book.ISDN == bookISDN
+                ? book with
+                {
+                    Chapters = book.Chapters.Select(chapter => chapter.Number == chapterNumber
+                        ? chapter with
+                        {
+                            Pages = chapter.Pages.Where(page => page.Number != pageNumber).ToArray()
+                        }
+                        : chapter).ToArray()
+                }
+                : book).ToArray()
+        };
+    }
 }

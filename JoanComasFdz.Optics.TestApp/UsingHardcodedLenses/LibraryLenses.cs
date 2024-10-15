@@ -5,7 +5,7 @@ namespace JoanComasFdz.Optics.TestApp.UsingHardcodedLenses;
 
 public static class LibraryLenses
 {
-    public static Lens<Library, IReadOnlyList<Book>> BooksLens() => new(
+    public static Lens<Library, IReadOnlyList<Book>> LibraryToBooksLens() => new(
         library => library.Books,
         (library, newBooks) => library with { Books = newBooks }
     );
@@ -22,7 +22,7 @@ public static class LibraryLenses
         );
     }
 
-    public static Lens<Book, IReadOnlyList<Chapter>> ChaptersLens() => new(
+    public static Lens<Book, IReadOnlyList<Chapter>> BookToChaptersLens() => new(
         book => book.Chapters,
         (book, newChapters) => book with { Chapters = newChapters }
     );
@@ -39,7 +39,7 @@ public static class LibraryLenses
         );
     }
 
-    public static Lens<Chapter, IReadOnlyList<Page>> PagesLens() => new(
+    public static Lens<Chapter, IReadOnlyList<Page>> ChapterToPagesLens() => new(
         chapter => chapter.Pages,
         (chapter, newPages) => chapter with { Pages = newPages }
     );
