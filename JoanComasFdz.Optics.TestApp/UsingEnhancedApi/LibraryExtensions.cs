@@ -72,5 +72,3 @@ public static class LibraryExtensions
         return new LensWrapper<Library, Page>(wrapper.Whole, composedLens);
     }
 }
-
-

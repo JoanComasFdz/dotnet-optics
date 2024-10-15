@@ -35,20 +35,20 @@ return library with
 };
 ```
 
-Using Lenses:
+Using hardcoded lenses:
 ```csharp
-return LibraryToBookLens(book => book.ISDN == bookISDN)
-    .Compose(BookToChapterLens(chapter => chapter.Number == pageNumber))
-    .Compose(ChapterToPageLens(page => page.Number == chapterNumber))
+return LibraryToBookLens(bookISDN)
+    .Compose(BookToChapterLens(pageNumber))
+    .Compose(ChapterToPageLens(chapterNumber))
     .Mutate(library, page => page with { Content = newContent });
 ```
 
-Using enhanced API:
+Using hardcoded lenses with enhanced API:
 ```csharp
 return library
-    .BookLens(book => book.ISDN == bookISDN)
-    .ChapterLens(chapter => chapter.Number == chapterNumber)
-    .PageLens(page => page.Number == pageNumber)
+    .BookLens(bookISDN)
+    .ChapterLens(chapterNumber)
+    .PageLens(pageNumber)
     .With(page => page with { Content = newContent });
 ```
 
@@ -58,7 +58,7 @@ return library
 
 ## Future work
 - [x] Add examples to remove items from collections.
-- [ ] Further enhance the API to pass only the actual item to be filtered by, like: `library.BookLens(bookISDN)`.
+- [x] Further enhance the API to pass only the actual item to be filtered by, like: `library.BookLens(bookISDN)`.
 - [ ] Investigate simplifying lens declaration: https://stackoverflow.com/questions/68012124/record-lenses-expression-tree-for-with-expression
 - [ ] Move example code to a unit testing project.
 - [ ] Use Source Generators to automatically create the lenses when a `record` is marked with an attribute like `[Lenses]`, like: https://github.com/Tinkoff/Visor
