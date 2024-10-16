@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoanComasFdz.Optics.TestApp", "JoanComasFdz.Optics.TestApp\JoanComasFdz.Optics.TestApp.csproj", "{9B97B320-B76E-4B6A-842C-B58D06CE13A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.TestApp", "JoanComasFdz.Optics.TestApp\JoanComasFdz.Optics.TestApp.csproj", "{9B97B320-B76E-4B6A-842C-B58D06CE13A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoanComasFdz.Optics", "JoanComasFdz.Optics\JoanComasFdz.Optics.csproj", "{B02560E7-2BA5-4952-B4BE-FE9FC9961618}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics", "JoanComasFdz.Optics\JoanComasFdz.Optics.csproj", "{B02560E7-2BA5-4952-B4BE-FE9FC9961618}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoanComasFdz.TestApp.UnitTests", "JoanComasFdz.TestApp.UnitTests\JoanComasFdz.TestApp.UnitTests.csproj", "{4BE80D16-0C79-477A-BFC0-DA9591BED5F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B02560E7-2BA5-4952-B4BE-FE9FC9961618}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B02560E7-2BA5-4952-B4BE-FE9FC9961618}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B02560E7-2BA5-4952-B4BE-FE9FC9961618}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BE80D16-0C79-477A-BFC0-DA9591BED5F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BE80D16-0C79-477A-BFC0-DA9591BED5F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BE80D16-0C79-477A-BFC0-DA9591BED5F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BE80D16-0C79-477A-BFC0-DA9591BED5F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
