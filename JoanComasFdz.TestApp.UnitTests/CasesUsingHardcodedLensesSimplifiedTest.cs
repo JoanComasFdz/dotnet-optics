@@ -1,6 +1,6 @@
 ﻿using JoanComasFdz.Optics.TestApp.UsingHardcodedLenses;
 using JoanComasFdz.Optics.TestApp.UsingHardcodedLensesSimplified;
-using Optics.TestApp.Domain;
+using JoanComasFdz.Optics.TestApp.Domain;
 
 namespace JoanComasFdz.TestApp.UnitTests;
 

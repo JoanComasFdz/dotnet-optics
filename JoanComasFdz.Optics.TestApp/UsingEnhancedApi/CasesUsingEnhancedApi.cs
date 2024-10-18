@@ -1,4 +1,4 @@
-﻿using Optics.TestApp.Domain;
+﻿using JoanComasFdz.Optics.TestApp.Domain;
 
 namespace JoanComasFdz.Optics.TestApp.UsingEnhancedApi;
 

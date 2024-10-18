@@ -17,8 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JoanComasFdz.Optics.TestApp.Domain\JoanComasFdz.Optics.TestApp.Domain.csproj" />
-    <ProjectReference Include="..\JoanComasFdz.Optics.TestApp\JoanComasFdz.Optics.TestApp.csproj" />
+    <ProjectReference Include="..\JoanComasFdz.Optics\JoanComasFdz.Optics.csproj" />
   </ItemGroup>
 
   <ItemGroup>

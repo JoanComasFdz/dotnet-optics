@@ -1,11 +1,12 @@
-﻿using JoanComasFdz.Optics.TestApp.UsingEnhancedApi;
-using JoanComasFdz.Optics.TestApp.Domain;
+﻿using JoanComasFdz.Optics.TestApp.Domain;
+using static JoanComasFdz.Optics.TestApp.UsingHardcodedLens2.LibraryLenses2;
+using JoanComasFdz.Optics.Lenses;
 
 namespace JoanComasFdz.TestApp.UnitTests;
 
-public class CasesUsingEnhancedApiTest
+public class CasesUsingHardcodedLens2Test
 {
-    private Library library = new Library(
+    private readonly Library library = new(
         Name: "Downtown Public Library",
         Address: new Address(
             Street: "456 Oak Street",
@@ -32,37 +33,65 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void AddBookToLibrary_NewLibraryHasNewBook()
     {
-        var newLibrary = CasesUsingEnhancedApi.AddBookToLibrary(library);
+        var secondBook = new Book(
+            ISDN: "5678",
+            Title: "Advanced Mathematics",
+            Author: "Bob Johnson",
+            Chapters: [
+                new Chapter(
+                            Number: 1,
+                            Title: "Linear Algebra",
+                            Pages: [
+                                new Page(1, "Linear Algebra Content")
+                            ]
+                        )
+            ]
+        );
+
+        var newLibrary = LibraryToBooksLens().Update(library, books => [.. books, secondBook]);
 
         Assert.Equal(2, newLibrary.Books.Count);
-        Assert.Equal("5678", newLibrary.Books.Last().ISDN);
+        Assert.Equal("5678", newLibrary.Books[1].ISDN);
     }
 
     [Fact]
     public void AddChapterToBook_BookHasNewChapter()
     {
-        var newLibrary = CasesUsingEnhancedApi.AddChapterToBook(library, "1234");
+        var secondChapter = new Chapter(
+            Number: 2,
+            Title: "First Algorithms",
+            Pages: [
+                new Page(10, "Page 10 Content")
+            ]
+        );
+
+        var newLibrary = LibraryToBookLens("1234")
+            .Compose(BookToChaptersLens())
+            .Update(library, chapters => [.. chapters, secondChapter]);
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         Assert.Equal(2, updatedBook.Chapters.Count);
-        Assert.Equal("First Algorithms", updatedBook.Chapters.Last().Title);
+        Assert.Equal("First Algorithms", updatedBook.Chapters[1].Title);
     }
 
     [Fact]
     public void AddPageToChapterOfBook_ChapterHasNewPage()
     {
-        var newLibrary = CasesUsingEnhancedApi.AddPageToChapterOfBook(library, "1234", 1);
+        var newLibrary = LibraryToBookLens("1234")
+            .Compose(BookToChapterLens(1))
+            .Compose(ChapterToPagesLens())
+            .Update(library, pages => [.. pages, new Page(2, "Page 2 Content")]);
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
         Assert.Equal(2, updatedChapter.Pages.Count);
-        Assert.Equal("Page 2 Content", updatedChapter.Pages.Last().Content);
+        Assert.Equal("Page 2 Content", updatedChapter.Pages[1].Content);
     }
 
     [Fact]
     public void UpdateBookTitle_BookTitleIsUpdated()
     {
-        var newLibrary = CasesUsingEnhancedApi.UpdateBookTitle(library, "1234", "Program nicely");
+        var newLibrary = LibraryToBookLens("1234").Update(library, book => book with { Title = "Program nicely" });
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         Assert.Equal("Program nicely", updatedBook.Title);
@@ -71,7 +100,9 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void UpdateChapterTitleOfBook_ChapterTitleIsUpdated()
     {
-        var newLibrary = CasesUsingEnhancedApi.UpdateChapterTitleOfBook(library, "1234", 1, "Advanced Algorithms");
+        var newLibrary = LibraryToBookLens("1234")
+            .Compose(BookToChapterLens(1))
+            .Update(library, chapter => chapter with { Title = "Advanced Algorithms" });
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
@@ -81,7 +112,10 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void UpdatePageContentOfChapterOfBook_PageContentIsUpdated()
     {
-        var newLibrary = CasesUsingEnhancedApi.UpdatePageContentOfChapterOfBook(library, "1234", 1, 1, "Updated Content");
+        var newLibrary = LibraryToBookLens("1234")
+            .Compose(BookToChapterLens(1))
+            .Compose(ChapterToPageLens(1))
+            .Update(library, page => page with { Content = "Updated Content" } );
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
@@ -92,7 +126,7 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void RemoveBookFromLibrary_BookIsRemoved()
     {
-        var newLibrary = CasesUsingEnhancedApi.RemoveBookFromLibrary(library, "1234");
+        var newLibrary = LibraryToBooksLens().Update(library, books => books.Where(book => book.ISDN != "1234").ToArray());
 
         Assert.Empty(newLibrary.Books);
     }
@@ -100,7 +134,9 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void RemoveChapterFromBook_ChapterIsRemoved()
     {
-        var newLibrary = CasesUsingEnhancedApi.RemoveChapterFromBook(library, "1234", 1);
+        var newLibrary = LibraryToBookLens("1234")
+            .Compose(BookToChaptersLens())
+            .Update(library, chapters => chapters.Where(chapter => chapter.Number != 1).ToArray());
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         Assert.Empty(updatedBook.Chapters);
@@ -109,7 +145,10 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void RemovePageFromChapterOfBook_PageIsRemoved()
     {
-        var newLibrary = CasesUsingEnhancedApi.RemovePageFromChapterOfBook(library, "1234", 1, 1);
+        var newLibrary = LibraryToBookLens("1234")
+            .Compose(BookToChapterLens(1))
+            .Compose(ChapterToPagesLens())
+            .Update(library, pages => pages.Where(page => page.Number != 1).ToArray());
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);

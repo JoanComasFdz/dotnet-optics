@@ -1,5 +1,5 @@
 ﻿using JoanComasFdz.Optics.Lenses;
-using Optics.TestApp.Domain;
+using JoanComasFdz.Optics.TestApp.Domain;
 
 namespace JoanComasFdz.Optics.TestApp.UsingHardcodedLensesSimplified;
 
@@ -16,7 +16,6 @@ public static class LibraryLensesSimplified
             }
         );
     }
-
 
     public static Lens<Book, Chapter> BookToChapterLens(int chapterNumber)
     {

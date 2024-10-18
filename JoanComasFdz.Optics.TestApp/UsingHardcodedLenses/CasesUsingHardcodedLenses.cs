@@ -1,5 +1,5 @@
 ﻿using JoanComasFdz.Optics.Lenses;
-using Optics.TestApp.Domain;
+using JoanComasFdz.Optics.TestApp.Domain;
 using static JoanComasFdz.Optics.TestApp.UsingHardcodedLenses.LibraryLenses;
 
 namespace JoanComasFdz.Optics.TestApp.UsingHardcodedLenses;

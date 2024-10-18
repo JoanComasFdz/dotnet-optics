@@ -3,7 +3,7 @@ using JoanComasFdz.Optics.TestApp.UsingEnhancedApiSimplified;
 using JoanComasFdz.Optics.TestApp.UsingHardcodedLenses;
 using JoanComasFdz.Optics.TestApp.UsingHardcodedLensesSimplified;
 using JoanComasFdz.Optics.TestApp.UsingWiths;
-using Optics.TestApp.Domain;
+using JoanComasFdz.Optics.TestApp.Domain;
 using System.Text.Json;
 
 Console.WriteLine("Creating an initial library");

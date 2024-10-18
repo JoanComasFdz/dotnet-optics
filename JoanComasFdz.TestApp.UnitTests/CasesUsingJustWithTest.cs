@@ -1,6 +1,5 @@
 using JoanComasFdz.Optics.TestApp.UsingWiths;
-using Optics.TestApp.Domain;
-using System.Net;
+using JoanComasFdz.Optics.TestApp.Domain;
 
 namespace JoanComasFdz.TestApp.UnitTests;
 
