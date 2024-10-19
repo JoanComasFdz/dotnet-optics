@@ -108,4 +108,56 @@ public class LensUnitTests
             Assert.Equal("I am C2", result.B.C.PropertyOfC);
         }
     }
+
+    public class NestedCollections
+    {
+        public record A(IReadOnlyCollection<B> Bs);         // A -> B returns collection. A -(predicate)-> B returns item.
+        public record B(int Id, IReadOnlyCollection<C> Cs); // Firts level nesting. B -> C returns collection. B -(predicate)-> C returns item.
+        public record C(string Id);                         // Item of first level nesting.
+
+        [Fact]
+        public void Create_AToCollectionOfB_Get_ReturnsCollectionOfBs()
+        {
+            var a = new A([new B(1, [])]);
+
+            var aToBsLens = new Lens<A, IReadOnlyCollection<B>>(source => source.Bs, (source, newBs) => source with { Bs = newBs });
+
+            var result = aToBsLens.Get(a);
+
+            Assert.NotNull(result);
+            Assert.Equal(a.Bs, result);
+        }
+
+        [Fact]
+        public void Create_AToCollectionOfB_Set_ReturnsNewA()
+        {
+            var a = new A([new B(1, [])]);
+
+            var aToBsLens = new Lens<A, IReadOnlyCollection<B>>(source => source.Bs, (source, newBs) => source with { Bs = newBs });
+
+            var result = aToBsLens.Set(a, [new B(2, [])]);
+
+            Assert.NotNull(result);
+            Assert.Single(a.Bs);
+            Assert.Equal(1, a.Bs.ElementAt(0).Id);
+            Assert.Single(result.Bs);
+            Assert.Equal(2, result.Bs.ElementAt(0).Id);
+        }
+
+        [Fact]
+        public void Create_AToCollectionOfB_Update_ReturnsNewA()
+        {
+            var a = new A([new B(1, [])]);
+
+            var aToBsLens = new Lens<A, IReadOnlyCollection<B>>(source => source.Bs, (source, newBs) => source with { Bs = newBs });
+
+            var result = aToBsLens.Update(a, newBs => [new B(2, [])]);
+
+            Assert.NotNull(result);
+            Assert.Single(a.Bs);
+            Assert.Equal(1, a.Bs.ElementAt(0).Id);
+            Assert.Single(result.Bs);
+            Assert.Equal(2, result.Bs.ElementAt(0).Id);
+        }
+    }
 }
