@@ -9,11 +9,37 @@ public class LensUnitTests
         public record C(string PropertyOfC);    // Second level nesting. Contains: primitive type.
 
         [Fact]
+        public void Create_LambdaAToId_Get_ReturnsId()
+        {
+            var a = new A(11, new B("b", new C("I am C")));
+
+            var aToIdLens = new Lens<A, int>(source => source.Id, (source, newId) => source with { Id = newId });
+
+            var result = aToIdLens.Get(a);
+
+            Assert.Equal(11, result);
+        }
+
+        [Fact]
+        public void Create_LambdaAToPrimitiveType_Set_ReturnsAWithNewId()
+        {
+            var a = new A(11, new B("b", new C("I am C")));
+
+            var aToIdLens = new Lens<A, int>(source => source.Id, (source, newId) => source with { Id = newId });
+
+            var result = aToIdLens.Set(a, 22);
+
+            Assert.NotNull(result);
+            Assert.Equal(11, a.Id);
+            Assert.Equal(22, result.Id);
+        }
+
+        [Fact]
         public void Create_LambdaAToB_Get_ReturnsB()
         {
             var a = new A(1, B: new B("b", new C("I am C")));
 
-            var aToBLens = new Lens<A, B>(a => a.B, (a, b) => a with { B = b});
+            var aToBLens = new Lens<A, B>(source => source.B, (source, newB) => source with { B = newB});
 
             var result = aToBLens.Get(a);
 
@@ -28,7 +54,7 @@ public class LensUnitTests
 
             var b2 = a.B with { Id = "b2" };
 
-            var aToBLens = new Lens<A, B>(a => a.B, (a, b) => a with { B = b });
+            var aToBLens = new Lens<A, B>(source => source.B, (source, newB) => source with { B = newB });
             var result = aToBLens.Set(a, b2);
 
             Assert.NotNull(result);
@@ -41,7 +67,7 @@ public class LensUnitTests
         {
             var a = new A(1, B: new B("b", new C("I am C")));
 
-            var aToBLens = new Lens<A, B>(a => a.B, (a, b) => a with { B = b });
+            var aToBLens = new Lens<A, B>(source => source.B, (source, newB) => source with { B = newB });
             var result = aToBLens.Update(a, b => b with { Id = "b2" });
 
             Assert.NotNull(result);
@@ -49,25 +75,13 @@ public class LensUnitTests
             Assert.Equal("b2", result.B.Id);
         }
 
-        //[Fact]
-        //public void Create_LambdaAToC_Throws()
-        //{
-        //    Assert.Throws<InvalidOperationException>(() => Lens2<A, C>.Create(a => a.B.C));
-        //}
-
-        //[Fact]
-        //public void Create_LambdaAToPrimitive_Throws()
-        //{
-        //    Assert.Throws<InvalidOperationException>(() => Lens2<A, int>.Create(a => a.Id));
-        //}
-
         [Fact]
         public void Compose_AtoBAndBToC_Get_ReturnsC()
         {
             var a = new A(1, B: new B("b", new C("I am C")));
 
-            var aToBLens = new Lens<A, B>(a => a.B, (a, b) => a with { B = b });
-            var bToCLens = new Lens<B, C>(b => b.C, (b, c) => b with { C = c });
+            var aToBLens = new Lens<A, B>(source => source.B, (source, newB) => source with { B = newB });
+            var bToCLens = new Lens<B, C>(source => source.C, (source, newC) => source with { C = newC });
 
             var aToCLens = aToBLens.Compose(bToCLens);
 
@@ -82,8 +96,8 @@ public class LensUnitTests
         {
             var a = new A(1, B: new B("b", new C("I am C")));
 
-            var aToBLens = new Lens<A, B>(a => a.B, (a, b) => a with { B = b });
-            var bToCLens = new Lens<B, C>(b => b.C, (b, c) => b with { C = c });
+            var aToBLens = new Lens<A, B>(source => source.B, (source, newB) => source with { B = newB });
+            var bToCLens = new Lens<B, C>(source => source.C, (source, newC) => source with { C = newC });
 
             var aToCLens = aToBLens.Compose(bToCLens);
 
