@@ -3,7 +3,7 @@ using JoanComasFdz.Optics.Lenses.v1;
 using JoanComasFdz.Optics.TestApp.Domain;
 using JoanComasFdz.Optics.TestApp.HowToUse.v1;
 
-namespace JoanComasFdz.Optics.TestApp.UsingEnhancedApi;
+namespace JoanComasFdz.Optics.TestApp.HowToUse.v1.Fluent;
 
 public static class LibraryExtensions
 {
