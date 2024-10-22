@@ -3,7 +3,7 @@ using JoanComasFdz.Optics.TestApp.Domain;
 
 namespace JoanComasFdz.Optics.TestApp.HowToUse.v1.Fluent;
 
-public static class CasesUsingEnhancedApi
+public static class CasesUsingHardcodedLensesFluent
 {
     public static Library AddBookToLibrary(Library library)
     {

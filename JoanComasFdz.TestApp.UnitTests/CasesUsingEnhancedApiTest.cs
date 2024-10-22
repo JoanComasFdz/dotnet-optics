@@ -32,7 +32,7 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void AddBookToLibrary_NewLibraryHasNewBook()
     {
-        var newLibrary = CasesUsingEnhancedApi.AddBookToLibrary(library);
+        var newLibrary = CasesUsingHardcodedLensesFluent.AddBookToLibrary(library);
 
         Assert.Equal(2, newLibrary.Books.Count);
         Assert.Equal("5678", newLibrary.Books.Last().ISDN);
@@ -41,7 +41,7 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void AddChapterToBook_BookHasNewChapter()
     {
-        var newLibrary = CasesUsingEnhancedApi.AddChapterToBook(library, "1234");
+        var newLibrary = CasesUsingHardcodedLensesFluent.AddChapterToBook(library, "1234");
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         Assert.Equal(2, updatedBook.Chapters.Count);
@@ -51,7 +51,7 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void AddPageToChapterOfBook_ChapterHasNewPage()
     {
-        var newLibrary = CasesUsingEnhancedApi.AddPageToChapterOfBook(library, "1234", 1);
+        var newLibrary = CasesUsingHardcodedLensesFluent.AddPageToChapterOfBook(library, "1234", 1);
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
@@ -62,7 +62,7 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void UpdateBookTitle_BookTitleIsUpdated()
     {
-        var newLibrary = CasesUsingEnhancedApi.UpdateBookTitle(library, "1234", "Program nicely");
+        var newLibrary = CasesUsingHardcodedLensesFluent.UpdateBookTitle(library, "1234", "Program nicely");
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         Assert.Equal("Program nicely", updatedBook.Title);
@@ -71,7 +71,7 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void UpdateChapterTitleOfBook_ChapterTitleIsUpdated()
     {
-        var newLibrary = CasesUsingEnhancedApi.UpdateChapterTitleOfBook(library, "1234", 1, "Advanced Algorithms");
+        var newLibrary = CasesUsingHardcodedLensesFluent.UpdateChapterTitleOfBook(library, "1234", 1, "Advanced Algorithms");
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
@@ -81,7 +81,7 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void UpdatePageContentOfChapterOfBook_PageContentIsUpdated()
     {
-        var newLibrary = CasesUsingEnhancedApi.UpdatePageContentOfChapterOfBook(library, "1234", 1, 1, "Updated Content");
+        var newLibrary = CasesUsingHardcodedLensesFluent.UpdatePageContentOfChapterOfBook(library, "1234", 1, 1, "Updated Content");
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
@@ -92,7 +92,7 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void RemoveBookFromLibrary_BookIsRemoved()
     {
-        var newLibrary = CasesUsingEnhancedApi.RemoveBookFromLibrary(library, "1234");
+        var newLibrary = CasesUsingHardcodedLensesFluent.RemoveBookFromLibrary(library, "1234");
 
         Assert.Empty(newLibrary.Books);
     }
@@ -100,7 +100,7 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void RemoveChapterFromBook_ChapterIsRemoved()
     {
-        var newLibrary = CasesUsingEnhancedApi.RemoveChapterFromBook(library, "1234", 1);
+        var newLibrary = CasesUsingHardcodedLensesFluent.RemoveChapterFromBook(library, "1234", 1);
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         Assert.Empty(updatedBook.Chapters);
@@ -109,7 +109,7 @@ public class CasesUsingEnhancedApiTest
     [Fact]
     public void RemovePageFromChapterOfBook_PageIsRemoved()
     {
-        var newLibrary = CasesUsingEnhancedApi.RemovePageFromChapterOfBook(library, "1234", 1, 1);
+        var newLibrary = CasesUsingHardcodedLensesFluent.RemovePageFromChapterOfBook(library, "1234", 1, 1);
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
