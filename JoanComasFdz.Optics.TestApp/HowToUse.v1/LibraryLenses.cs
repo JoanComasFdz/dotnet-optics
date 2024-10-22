@@ -1,7 +1,7 @@
 ﻿using JoanComasFdz.Optics.Lenses;
 using JoanComasFdz.Optics.TestApp.Domain;
 
-namespace JoanComasFdz.Optics.TestApp.UsingHardcodedLenses;
+namespace JoanComasFdz.Optics.TestApp.HowToUse.v1;
 
 public static class LibraryLenses
 {
@@ -14,11 +14,7 @@ public static class LibraryLenses
     {
         return new Lens<Library, Book>(
             library => library.Books.Single(predicate),
-            (library, updatedBook) =>
-            {
-                var updatedBooks = library.Books.Select(book => predicate(book) ? updatedBook : book).ToList();
-                return library with { Books = updatedBooks.AsReadOnly() };
-            }
+            (library, updatedBook) => library with { Books = library.Books.Select(book => predicate(book) ? updatedBook : book).ToArray() }
         );
     }
 

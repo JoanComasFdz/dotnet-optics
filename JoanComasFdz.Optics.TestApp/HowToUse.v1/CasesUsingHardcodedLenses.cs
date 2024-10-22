@@ -1,8 +1,8 @@
 ﻿using JoanComasFdz.Optics.Lenses;
 using JoanComasFdz.Optics.TestApp.Domain;
-using static JoanComasFdz.Optics.TestApp.UsingHardcodedLenses.LibraryLenses;
+using static JoanComasFdz.Optics.TestApp.HowToUse.v1.LibraryLenses;
 
-namespace JoanComasFdz.Optics.TestApp.UsingHardcodedLenses;
+namespace JoanComasFdz.Optics.TestApp.HowToUse.v1;
 
 public static class CasesUsingHardcodedLenses
 {
