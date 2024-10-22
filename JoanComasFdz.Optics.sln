@@ -15,7 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.UnitTes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.TestApp.Domain", "JoanComasFdz.Optics.TestApp.Domain\JoanComasFdz.Optics.TestApp.Domain.csproj", "{EA08DE5B-5B32-46B7-89B8-E7B722DFB7F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoanComasFdz.Optics.Lenses.v1.UnitTests", "JoanComasFdz.Optics.Lenses.v1.UnitTests\JoanComasFdz.Optics.Lenses.v1.UnitTests.csproj", "{7106C9F9-ED96-4119-B077-29E8EE88089D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.Lenses.v1.UnitTests", "JoanComasFdz.Optics.Lenses.v1.UnitTests\JoanComasFdz.Optics.Lenses.v1.UnitTests.csproj", "{7106C9F9-ED96-4119-B077-29E8EE88089D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoanComasFdz.Optics.Lenses.v1.Fluent", "JoanComasFdz.Optics.Lenses.v1.Fluent\JoanComasFdz.Optics.Lenses.v1.Fluent.csproj", "{51221BD3-57F2-440B-97B3-3BA40860D1DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoanComasFdz.Optics.Lenses.v1.Fluent.UnitTests", "JoanComasFdz.Optics.Lenses.v1.Fluent.UnitTests\JoanComasFdz.Optics.Lenses.v1.Fluent.UnitTests.csproj", "{3D166B1F-0D37-4681-8A77-15FE18525EA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,14 @@ Global
 		{7106C9F9-ED96-4119-B077-29E8EE88089D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7106C9F9-ED96-4119-B077-29E8EE88089D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7106C9F9-ED96-4119-B077-29E8EE88089D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51221BD3-57F2-440B-97B3-3BA40860D1DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51221BD3-57F2-440B-97B3-3BA40860D1DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51221BD3-57F2-440B-97B3-3BA40860D1DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51221BD3-57F2-440B-97B3-3BA40860D1DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D166B1F-0D37-4681-8A77-15FE18525EA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D166B1F-0D37-4681-8A77-15FE18525EA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D166B1F-0D37-4681-8A77-15FE18525EA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D166B1F-0D37-4681-8A77-15FE18525EA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
