@@ -11,8 +11,8 @@ var newLibrary = LibraryToBook(book => book.ISDN == "1234")
 The lens is called directly on the `library`:
 ```
 var newLibrary = library
-    .LibraryToBook(book => book.ISDN == "1234")
-    .BookToChapter(chapter => chapter.Number == 1)
+    .BookLens(book => book.ISDN == "1234")
+    .ChapterLens(chapter => chapter.Number == 1)
     .With(chapter => chapter with { Number = 2});
 ```
 
