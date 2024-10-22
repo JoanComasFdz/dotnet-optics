@@ -1,18 +1,12 @@
 ﻿using JoanComasFdz.Optics.Lenses;
 using JoanComasFdz.Optics.Lenses.v1;
+using JoanComasFdz.Optics.Lenses.v1.Fluent;
 using JoanComasFdz.Optics.TestApp.Domain;
-using JoanComasFdz.Optics.TestApp.HowToUse.v1;
 
 namespace JoanComasFdz.Optics.TestApp.HowToUse.v1.Fluent;
 
 public static class LibraryExtensions
 {
-    public record LensWrapper<TWhole, TPart>(TWhole Whole, Lens<TWhole, TPart> Lens)
-    {
-        // Method to mutate the part of the object
-        public TWhole With(Func<TPart, TPart> transform) => Lens.Update(Whole, transform);
-    }
-
     public static LensWrapper<Library, IReadOnlyList<Book>> BooksLens(this Library library)
     {
         var booksLens = LibraryLenses.LibraryToBooksLens();

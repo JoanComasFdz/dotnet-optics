@@ -1,4 +1,5 @@
-﻿using JoanComasFdz.Optics.TestApp.Domain;
+﻿using JoanComasFdz.Optics.Lenses.v1.Fluent;
+using JoanComasFdz.Optics.TestApp.Domain;
 
 namespace JoanComasFdz.Optics.TestApp.HowToUse.v1.Fluent;
 

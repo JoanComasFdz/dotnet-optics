@@ -1,8 +1,8 @@
 ﻿using JoanComasFdz.Optics.Lenses;
 using JoanComasFdz.Optics.TestApp.Domain;
-using static JoanComasFdz.Optics.TestApp.HowToUse.v1.Fluent.LibraryExtensions;
 using JoanComasFdz.Optics.Lenses.v1;
 using JoanComasFdz.Optics.TestApp.HowToUse.v1.Simplified;
+using JoanComasFdz.Optics.Lenses.v1.Fluent;
 
 namespace JoanComasFdz.Optics.TestApp.UsingEnhancedApiSimplified;
 
