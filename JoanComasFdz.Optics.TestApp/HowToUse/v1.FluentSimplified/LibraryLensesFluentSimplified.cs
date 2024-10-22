@@ -6,7 +6,7 @@ using JoanComasFdz.Optics.Lenses.v1.Fluent;
 
 namespace JoanComasFdz.Optics.TestApp.HowToUse.v1.FluentSimplified;
 
-public static class LibraryExtensionsSimplified
+public static class LibraryLensesFluentSimplified
 {
     public static LensWrapper<Library, Book> BookLens(this Library library, string bookISDN)
     {

@@ -4,7 +4,7 @@ using JoanComasFdz.Optics.TestApp.HowToUse.v1.Fluent;
 
 namespace JoanComasFdz.Optics.TestApp.HowToUse.v1.FluentSimplified;
 
-public static class CasesUsingEnhancedApiSimplified
+public static class CasesUsingHardcodedLensesFluentSimplified
 {
     public static Library AddBookToLibrary(Library library)
     {
