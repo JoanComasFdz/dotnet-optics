@@ -1,8 +1,8 @@
-using JoanComasFdz.Optics.Lenses;
+using JoanComasFdz.Optics.Lenses.v2;
 
-namespace JoanComasFdz.Optics.UnitTests;
+namespace JoanComasFdz.Optics.Lenses.v2.UnitTests;
 
-public class Lens2UnitTests
+public class LensUnitTests
 {
     public class NestedProperties
     {
@@ -15,7 +15,7 @@ public class Lens2UnitTests
         {
             var a = new A(1, B: new B("b", new C("I am C")));
 
-            var aToBLens = Lens2<A, B>.Create(a => a.B);
+            var aToBLens = Lens<A, B>.Create(a => a.B);
 
             var result = aToBLens.Get(a);
 
@@ -30,7 +30,7 @@ public class Lens2UnitTests
 
             var b2 = a.B with { Id = "b2" };
 
-            var aToBLens = Lens2<A, B>.Create(a => a.B);
+            var aToBLens = Lens<A, B>.Create(a => a.B);
             var result = aToBLens.Set(a, b2);
 
             Assert.NotNull(result);
@@ -43,7 +43,7 @@ public class Lens2UnitTests
         {
             var a = new A(1, B: new B("b", new C("I am C")));
 
-            var aToBLens = Lens2<A, B>.Create(a => a.B);
+            var aToBLens = Lens<A, B>.Create(a => a.B);
             var result = aToBLens.Update(a, b => b with { Id = "b2" });
 
             Assert.NotNull(result);
@@ -54,13 +54,13 @@ public class Lens2UnitTests
         [Fact]
         public void Create_LambdaAToC_Throws()
         {
-            Assert.Throws<InvalidOperationException>(() => Lens2<A, C>.Create(a => a.B.C));
+            Assert.Throws<InvalidOperationException>(() => Lens<A, C>.Create(a => a.B.C));
         }
 
         [Fact]
         public void Create_LambdaAToPrimitive_Throws()
         {
-            Assert.Throws<InvalidOperationException>(() => Lens2<A, int>.Create(a => a.Id));
+            Assert.Throws<InvalidOperationException>(() => Lens<A, int>.Create(a => a.Id));
         }
 
         [Fact]
@@ -68,8 +68,8 @@ public class Lens2UnitTests
         {
             var a = new A(1, B: new B("b", new C("I am C")));
 
-            var aToBLens = Lens2<A, B>.Create(a => a.B);
-            var bToCLens = Lens2<B, C>.Create(b => b.C);
+            var aToBLens = Lens<A, B>.Create(a => a.B);
+            var bToCLens = Lens<B, C>.Create(b => b.C);
 
             var aToCLens = aToBLens.Compose(bToCLens);
 
@@ -84,8 +84,8 @@ public class Lens2UnitTests
         {
             var a = new A(1, B: new B("b", new C("I am C")));
 
-            var aToBLens = Lens2<A, B>.Create(a => a.B);
-            var bToCLens = Lens2<B, C>.Create(b => b.C);
+            var aToBLens = Lens<A, B>.Create(a => a.B);
+            var bToCLens = Lens<B, C>.Create(b => b.C);
 
             var aToCLens = aToBLens.Compose(bToCLens);
 
@@ -106,8 +106,8 @@ public class Lens2UnitTests
         [Fact]
         public void Create_AToCollectionOfB_Get_ReturnsCollectionOfBs()
         {
-            var a = new A([new B(1, []), new B(2, [] )]);
-            var aToBsLens = Lens2<A, IReadOnlyCollection<B>>.Create(a => a.Bs);
+            var a = new A([new B(1, []), new B(2, [])]);
+            var aToBsLens = Lens<A, IReadOnlyCollection<B>>.Create(a => a.Bs);
 
             var result = aToBsLens.Get(a);
 
@@ -122,7 +122,7 @@ public class Lens2UnitTests
         public void Create_AToCollectionOfB_Set_ReturnsNewA()
         {
             var a = new A([new B(1, []), new B(2, [])]);
-            var aToBsLens = Lens2<A, IReadOnlyCollection<B>>.Create(a => a.Bs);
+            var aToBsLens = Lens<A, IReadOnlyCollection<B>>.Create(a => a.Bs);
 
             var result = aToBsLens.Set(a, [new B(3, [])]);
 
@@ -138,9 +138,9 @@ public class Lens2UnitTests
         public void Create_AToCollectionOfB_Update_ReturnsNewA()
         {
             var a = new A([new B(1, []), new B(2, [])]);
-            var aToBsLens = Lens2<A, IReadOnlyCollection<B>>.Create(a => a.Bs);
+            var aToBsLens = Lens<A, IReadOnlyCollection<B>>.Create(a => a.Bs);
 
-            var result = aToBsLens.Update(a, bs => [..bs, new  B(3, [])]);
+            var result = aToBsLens.Update(a, bs => [.. bs, new B(3, [])]);
 
             Assert.NotNull(result);
             Assert.Equal(2, a.Bs.Count);
@@ -156,7 +156,7 @@ public class Lens2UnitTests
         public void Create_AToBWithPredicate_Get_ReturnsB()
         {
             var a = new A([new B(1, []), new B(2, [])]);
-            var aToBLens = Lens2<A, B>.Create<IReadOnlyCollection<B>>(a => a.Bs, b => b.Id == 1);
+            var aToBLens = Lens<A, B>.Create<IReadOnlyCollection<B>>(a => a.Bs, b => b.Id == 1);
 
             var result = aToBLens.Get(a);
 
@@ -168,7 +168,7 @@ public class Lens2UnitTests
         public void Create_AToBWithPredicate_Set_ReturnsAWithNewBForMtchingId()
         {
             var a = new A([new B(1, []), new B(2, [])]);
-            var aToBLens = Lens2<A, B>.Create<IReadOnlyCollection<B>>(a => a.Bs, b => b.Id == 1);
+            var aToBLens = Lens<A, B>.Create<IReadOnlyCollection<B>>(a => a.Bs, b => b.Id == 1);
 
             var result = aToBLens.Set(a, new B(3, []));
 
@@ -184,7 +184,7 @@ public class Lens2UnitTests
         public void Create_AToBWithPredicate_Update_ReturnsAWithNewBForMtchingId()
         {
             var a = new A([new B(1, []), new B(2, [])]);
-            var aToBLens = Lens2<A, B>.Create<IReadOnlyCollection<B>>(a => a.Bs, b => b.Id == 1);
+            var aToBLens = Lens<A, B>.Create<IReadOnlyCollection<B>>(a => a.Bs, b => b.Id == 1);
 
             var result = aToBLens.Update(a, book => book with { Id = 3 });
 
@@ -200,8 +200,8 @@ public class Lens2UnitTests
         public void Create_AToBWithPredicateAndBToCollectionOfCs_Get_ReturnsCollectionOfCs()
         {
             var a = new A([new B(1, [new C("c1")]), new B(2, [])]);
-            var aToBLens = Lens2<A, B>.Create<IReadOnlyCollection<B>>(a => a.Bs, b => b.Id == 1);
-            var bToCsLens = Lens2<B, IReadOnlyCollection<C>>.Create(b => b.Cs);
+            var aToBLens = Lens<A, B>.Create<IReadOnlyCollection<B>>(a => a.Bs, b => b.Id == 1);
+            var bToCsLens = Lens<B, IReadOnlyCollection<C>>.Create(b => b.Cs);
 
             var aToCsLens = aToBLens.Compose(bToCsLens);
 
@@ -216,8 +216,8 @@ public class Lens2UnitTests
         public void Create_AToBWithPredicateAndBToCollectionOfCs_Set_ReturnsNewA()
         {
             var a = new A([new B(1, [new C("c1")]), new B(2, [])]);
-            var aToBLens = Lens2<A, B>.Create<IReadOnlyCollection<B>>(a => a.Bs, b => b.Id == 1);
-            var bToCsLens = Lens2<B, IReadOnlyCollection<C>>.Create(b => b.Cs);
+            var aToBLens = Lens<A, B>.Create<IReadOnlyCollection<B>>(a => a.Bs, b => b.Id == 1);
+            var bToCsLens = Lens<B, IReadOnlyCollection<C>>.Create(b => b.Cs);
 
             var aToCsLens = aToBLens.Compose(bToCsLens);
 
@@ -235,8 +235,8 @@ public class Lens2UnitTests
         public void Create_AToBWithPredicateAndBToCollectionOfCs_Update_ReturnsNewA()
         {
             var a = new A([new B(1, [new C("c1")]), new B(2, [])]);
-            var aToBLens = Lens2<A, B>.Create<IReadOnlyCollection<B>>(a => a.Bs, b => b.Id == 1);
-            var bToCsLens = Lens2<B, IReadOnlyCollection<C>>.Create(b => b.Cs);
+            var aToBLens = Lens<A, B>.Create<IReadOnlyCollection<B>>(a => a.Bs, b => b.Id == 1);
+            var bToCsLens = Lens<B, IReadOnlyCollection<C>>.Create(b => b.Cs);
 
             var aToCsLens = aToBLens.Compose(bToCsLens);
 
@@ -255,7 +255,7 @@ public class Lens2UnitTests
         {
             var a = new A([new B(1, [])]);
 
-            Assert.Throws<LensTypeDoesNotMatchDataTypeException>(() => Lens2<A, IEnumerable<B>>.Create(a => a.Bs)
+            Assert.Throws<LensTypeDoesNotMatchDataTypeException>(() => Lens<A, IEnumerable<B>>.Create(a => a.Bs)
             );
         }
     }

@@ -2,12 +2,12 @@
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace JoanComasFdz.Optics.Lenses;
+namespace JoanComasFdz.Optics.Lenses.v2;
 
-public partial record Lens2<TWhole, TPart>(Func<TWhole, TPart> Get, Func<TWhole, TPart, TWhole> Set)
+public record Lens<TWhole, TPart>(Func<TWhole, TPart> Get, Func<TWhole, TPart, TWhole> Set)
 {
     // Create method with depth and type checks
-    public static Lens2<TWhole, TPart> Create(Expression<Func<TWhole, TPart>> expression)
+    public static Lens<TWhole, TPart> Create(Expression<Func<TWhole, TPart>> expression)
     {
         // Ensure only 1 level of depth is allowed
         if (GetExpressionDepth(expression.Body) > 1)
@@ -25,11 +25,11 @@ public partial record Lens2<TWhole, TPart>(Func<TWhole, TPart> Get, Func<TWhole,
         var getter = expression.Compile();
         var setter = CreateMutator(expression);
 
-        return new Lens2<TWhole, TPart>(getter, setter);
+        return new Lens<TWhole, TPart>(getter, setter);
     }
 
     // New Create method for collections, which allows returning a specific item in the collection
-    public static Lens2<TWhole, TPart> Create<TCollection>(
+    public static Lens<TWhole, TPart> Create<TCollection>(
           Expression<Func<TWhole, IEnumerable<TPart>>> collectionProperty,
           Expression<Func<TPart, bool>> predicate)
     {
@@ -41,7 +41,7 @@ public partial record Lens2<TWhole, TPart>(Func<TWhole, TPart> Get, Func<TWhole,
         var rewrittenCollectionProperty = (LambdaExpression)rewriter.Visit(collectionProperty);
 
         // Make the correct Lens2<TWhole, TCollection> type
-        var wholeToCollectionLens = typeof(Lens2<,>).MakeGenericType(typeof(TWhole), actualCollectionType);
+        var wholeToCollectionLens = typeof(Lens<,>).MakeGenericType(typeof(TWhole), actualCollectionType);
 
         // Use reflection to dynamically call the correct Create method with the right collection type
         var createWholeToCollectionMethod = wholeToCollectionLens
@@ -52,14 +52,14 @@ public partial record Lens2<TWhole, TPart>(Func<TWhole, TPart> Get, Func<TWhole,
         var collectionLens = createWholeToCollectionMethod.Invoke(null, [rewrittenCollectionProperty]);
 
         // Create the itemLens with the correct collection type
-        var collectionToItemLens = typeof(Lens2<,>).MakeGenericType(actualCollectionType, typeof(TPart));
+        var collectionToItemLens = typeof(Lens<,>).MakeGenericType(actualCollectionType, typeof(TPart));
         var createCollectionToItemMethod = collectionToItemLens
             .GetMethods(BindingFlags.Public | BindingFlags.Static)
             .First(m => m.Name == "Create" && m.GetParameters().Length == 1); // Disambiguate by parameter count
 
         var itemLens = CreateItemLens(actualCollectionType, predicate);
 
-        var composeMethod = typeof(Lens2Extensions) // Replace 'LensExtensions' with the class that contains the extension
+        var composeMethod = typeof(LensExtensions) // Replace 'LensExtensions' with the class that contains the extension
         .GetMethods(BindingFlags.Public | BindingFlags.Static)
         .Single(m => m.Name == "Compose" && m.IsGenericMethod);
 
@@ -69,7 +69,7 @@ public partial record Lens2<TWhole, TPart>(Func<TWhole, TPart> Get, Func<TWhole,
         // Invoke the Compose extension method
         var composedLens = genericComposeMethod.Invoke(null, [collectionLens, itemLens]);
 
-        return (Lens2<TWhole, TPart>)composedLens;
+        return (Lens<TWhole, TPart>)composedLens;
     }
 
     private class CollectionTypeRewriter(Type targetCollectionType) : ExpressionVisitor
@@ -150,7 +150,7 @@ public partial record Lens2<TWhole, TPart>(Func<TWhole, TPart> Get, Func<TWhole,
         var itemSetter = itemSetterLambda.Compile();
 
         // Dynamically create the Lens2 object for the item lens
-        var lensType = typeof(Lens2<,>).MakeGenericType(actualCollectionType, typeof(TPart));
+        var lensType = typeof(Lens<,>).MakeGenericType(actualCollectionType, typeof(TPart));
         return Activator.CreateInstance(lensType, itemGetter, itemSetter);
     }
 
@@ -207,7 +207,7 @@ public partial record Lens2<TWhole, TPart>(Func<TWhole, TPart> Get, Func<TWhole,
             }
             catch (ArgumentException ae)
             {
-                var regex = CannotAssignCollectionTypesMessageRegex();
+                var regex = new Regex("'([^']*)'");
                 var matches = regex.Matches(ae.Message);
                 if (matches.Count < 2)
                 {
@@ -233,7 +233,4 @@ public partial record Lens2<TWhole, TPart>(Func<TWhole, TPart> Get, Func<TWhole,
         var assignLambda = (Expression<Func<TWhole, TPart, TWhole>>)Expression.Lambda(block, typeParam, valueParam);
         return assignLambda.Compile();
     }
-
-    [GeneratedRegex("'([^']*)'")]
-    private static partial Regex CannotAssignCollectionTypesMessageRegex();
 }

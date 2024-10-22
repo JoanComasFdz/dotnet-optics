@@ -1,7 +1,7 @@
 ﻿using JoanComasFdz.Optics.TestApp.Domain;
 using JoanComasFdz.Optics.TestApp.HowToUse.v1.Simplified;
 
-namespace JoanComasFdz.TestApp.UnitTests;
+namespace JoanComasFdz.TestApp.UnitTests.v1;
 
 public class CasesUsingHardcodedLensesSimplifiedTest
 {

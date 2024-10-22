@@ -1,10 +1,11 @@
 ﻿using JoanComasFdz.Optics.TestApp.Domain;
-using static JoanComasFdz.Optics.TestApp.UsingHardcodedLens2.LibraryLenses2;
+using static JoanComasFdz.Optics.TestApp.HowToUse.v2.LibraryLenses;
 using JoanComasFdz.Optics.Lenses;
+using JoanComasFdz.Optics.Lenses.v2;
 
-namespace JoanComasFdz.TestApp.UnitTests;
+namespace JoanComasFdz.TestApp.UnitTests.v2;
 
-public class CasesUsingHardcodedLens2Test
+public class CasesUsingHardcodedLensTest
 {
     private readonly Library library = new(
         Name: "Downtown Public Library",
@@ -115,7 +116,7 @@ public class CasesUsingHardcodedLens2Test
         var newLibrary = LibraryToBookLens("1234")
             .Compose(BookToChapterLens(1))
             .Compose(ChapterToPageLens(1))
-            .Update(library, page => page with { Content = "Updated Content" } );
+            .Update(library, page => page with { Content = "Updated Content" });
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);

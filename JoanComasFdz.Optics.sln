@@ -5,21 +5,21 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.TestApp", "JoanComasFdz.Optics.TestApp\JoanComasFdz.Optics.TestApp.csproj", "{9B97B320-B76E-4B6A-842C-B58D06CE13A5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics", "JoanComasFdz.Optics\JoanComasFdz.Optics.csproj", "{B02560E7-2BA5-4952-B4BE-FE9FC9961618}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.Lenses.v1", "JoanComasFdz.Optics.Lenses.v1\JoanComasFdz.Optics.Lenses.v1.csproj", "{C49C898B-038F-4E59-8776-8C510E52AA9B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.TestApp.UnitTests", "JoanComasFdz.TestApp.UnitTests\JoanComasFdz.TestApp.UnitTests.csproj", "{4BE80D16-0C79-477A-BFC0-DA9591BED5F0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.UnitTests", "JoanComasFdz.Optics.UnitTests\JoanComasFdz.Optics.UnitTests.csproj", "{6706C0B7-703A-4E05-A290-669B70D39F68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.Lenses.v2.UnitTests", "JoanComasFdz.Optics.Lenses.v2.UnitTests\JoanComasFdz.Optics.Lenses.v2.UnitTests.csproj", "{6706C0B7-703A-4E05-A290-669B70D39F68}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.TestApp.Domain", "JoanComasFdz.Optics.TestApp.Domain\JoanComasFdz.Optics.TestApp.Domain.csproj", "{EA08DE5B-5B32-46B7-89B8-E7B722DFB7F2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.Lenses.v1.UnitTests", "JoanComasFdz.Optics.Lenses.v1.UnitTests\JoanComasFdz.Optics.Lenses.v1.UnitTests.csproj", "{7106C9F9-ED96-4119-B077-29E8EE88089D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoanComasFdz.Optics.Lenses.v1.Fluent", "JoanComasFdz.Optics.Lenses.v1.Fluent\JoanComasFdz.Optics.Lenses.v1.Fluent.csproj", "{51221BD3-57F2-440B-97B3-3BA40860D1DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.Lenses.v1.Fluent", "JoanComasFdz.Optics.Lenses.v1.Fluent\JoanComasFdz.Optics.Lenses.v1.Fluent.csproj", "{51221BD3-57F2-440B-97B3-3BA40860D1DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoanComasFdz.Optics.Lenses.v1.Fluent.UnitTests", "JoanComasFdz.Optics.Lenses.v1.Fluent.UnitTests\JoanComasFdz.Optics.Lenses.v1.Fluent.UnitTests.csproj", "{3D166B1F-0D37-4681-8A77-15FE18525EA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.Lenses.v1.Fluent.UnitTests", "JoanComasFdz.Optics.Lenses.v1.Fluent.UnitTests\JoanComasFdz.Optics.Lenses.v1.Fluent.UnitTests.csproj", "{3D166B1F-0D37-4681-8A77-15FE18525EA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoanComasFdz.Optics.Lenses.v2", "JoanComasFdz.Optics.Lenses.v2\JoanComasFdz.Optics.Lenses.v2.csproj", "{B74E0428-A5AB-4A87-A206-BA54477FF15E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +31,6 @@ Global
 		{9B97B320-B76E-4B6A-842C-B58D06CE13A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B97B320-B76E-4B6A-842C-B58D06CE13A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B97B320-B76E-4B6A-842C-B58D06CE13A5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B02560E7-2BA5-4952-B4BE-FE9FC9961618}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B02560E7-2BA5-4952-B4BE-FE9FC9961618}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B02560E7-2BA5-4952-B4BE-FE9FC9961618}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B02560E7-2BA5-4952-B4BE-FE9FC9961618}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C49C898B-038F-4E59-8776-8C510E52AA9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C49C898B-038F-4E59-8776-8C510E52AA9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C49C898B-038F-4E59-8776-8C510E52AA9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,6 +59,10 @@ Global
 		{3D166B1F-0D37-4681-8A77-15FE18525EA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D166B1F-0D37-4681-8A77-15FE18525EA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D166B1F-0D37-4681-8A77-15FE18525EA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B74E0428-A5AB-4A87-A206-BA54477FF15E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B74E0428-A5AB-4A87-A206-BA54477FF15E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B74E0428-A5AB-4A87-A206-BA54477FF15E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B74E0428-A5AB-4A87-A206-BA54477FF15E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
