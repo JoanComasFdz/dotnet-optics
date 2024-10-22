@@ -1,9 +1,9 @@
 ﻿using JoanComasFdz.Optics.TestApp.Domain;
-using JoanComasFdz.Optics.TestApp.HowToUse.v1.FluentSimplified;
+using JoanComasFdz.Optics.TestApp.HowToUse.v1.Fluent;
 
 namespace JoanComasFdz.TestApp.UnitTests;
 
-public class CasesUsingEnhancedApiSimplifiedTest
+public class CasesUsingHardcodedLensesFluentTest
 {
     private Library library = new Library(
         Name: "Downtown Public Library",
@@ -32,7 +32,7 @@ public class CasesUsingEnhancedApiSimplifiedTest
     [Fact]
     public void AddBookToLibrary_NewLibraryHasNewBook()
     {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.AddBookToLibrary(library);
+        var newLibrary = CasesUsingHardcodedLensesFluent.AddBookToLibrary(library);
 
         Assert.Equal(2, newLibrary.Books.Count);
         Assert.Equal("5678", newLibrary.Books.Last().ISDN);
@@ -41,7 +41,7 @@ public class CasesUsingEnhancedApiSimplifiedTest
     [Fact]
     public void AddChapterToBook_BookHasNewChapter()
     {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.AddChapterToBook(library, "1234");
+        var newLibrary = CasesUsingHardcodedLensesFluent.AddChapterToBook(library, "1234");
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         Assert.Equal(2, updatedBook.Chapters.Count);
@@ -51,7 +51,7 @@ public class CasesUsingEnhancedApiSimplifiedTest
     [Fact]
     public void AddPageToChapterOfBook_ChapterHasNewPage()
     {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.AddPageToChapterOfBook(library, "1234", 1);
+        var newLibrary = CasesUsingHardcodedLensesFluent.AddPageToChapterOfBook(library, "1234", 1);
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
@@ -62,7 +62,7 @@ public class CasesUsingEnhancedApiSimplifiedTest
     [Fact]
     public void UpdateBookTitle_BookTitleIsUpdated()
     {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.UpdateBookTitle(library, "1234", "Program nicely");
+        var newLibrary = CasesUsingHardcodedLensesFluent.UpdateBookTitle(library, "1234", "Program nicely");
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         Assert.Equal("Program nicely", updatedBook.Title);
@@ -71,7 +71,7 @@ public class CasesUsingEnhancedApiSimplifiedTest
     [Fact]
     public void UpdateChapterTitleOfBook_ChapterTitleIsUpdated()
     {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.UpdateChapterTitleOfBook(library, "1234", 1, "Advanced Algorithms");
+        var newLibrary = CasesUsingHardcodedLensesFluent.UpdateChapterTitleOfBook(library, "1234", 1, "Advanced Algorithms");
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
@@ -81,7 +81,7 @@ public class CasesUsingEnhancedApiSimplifiedTest
     [Fact]
     public void UpdatePageContentOfChapterOfBook_PageContentIsUpdated()
     {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.UpdatePageContentOfChapterOfBook(library, "1234", 1, 1, "Updated Content");
+        var newLibrary = CasesUsingHardcodedLensesFluent.UpdatePageContentOfChapterOfBook(library, "1234", 1, 1, "Updated Content");
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
@@ -92,7 +92,7 @@ public class CasesUsingEnhancedApiSimplifiedTest
     [Fact]
     public void RemoveBookFromLibrary_BookIsRemoved()
     {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.RemoveBookFromLibrary(library, "1234");
+        var newLibrary = CasesUsingHardcodedLensesFluent.RemoveBookFromLibrary(library, "1234");
 
         Assert.Empty(newLibrary.Books);
     }
@@ -100,7 +100,7 @@ public class CasesUsingEnhancedApiSimplifiedTest
     [Fact]
     public void RemoveChapterFromBook_ChapterIsRemoved()
     {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.RemoveChapterFromBook(library, "1234", 1);
+        var newLibrary = CasesUsingHardcodedLensesFluent.RemoveChapterFromBook(library, "1234", 1);
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         Assert.Empty(updatedBook.Chapters);
@@ -109,7 +109,7 @@ public class CasesUsingEnhancedApiSimplifiedTest
     [Fact]
     public void RemovePageFromChapterOfBook_PageIsRemoved()
     {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.RemovePageFromChapterOfBook(library, "1234", 1, 1);
+        var newLibrary = CasesUsingHardcodedLensesFluent.RemovePageFromChapterOfBook(library, "1234", 1, 1);
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
