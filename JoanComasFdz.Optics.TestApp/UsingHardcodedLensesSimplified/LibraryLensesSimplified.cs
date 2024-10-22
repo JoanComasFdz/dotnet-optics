@@ -1,13 +1,13 @@
-﻿using JoanComasFdz.Optics.Lenses;
+﻿using JoanComasFdz.Optics.Lenses.v1;
 using JoanComasFdz.Optics.TestApp.Domain;
 
 namespace JoanComasFdz.Optics.TestApp.UsingHardcodedLensesSimplified;
 
 public static class LibraryLensesSimplified
 {
-    public static OldLens<Library, Book> LibraryToBookLens(string bookISDN)
+    public static Lens<Library, Book> LibraryToBookLens(string bookISDN)
     {
-        return new OldLens<Library, Book>(
+        return new Lens<Library, Book>(
             library => library.Books.Single(book => book.ISDN == bookISDN),
             (library, updatedBook) =>
             {
@@ -17,9 +17,9 @@ public static class LibraryLensesSimplified
         );
     }
 
-    public static OldLens<Book, Chapter> BookToChapterLens(int chapterNumber)
+    public static Lens<Book, Chapter> BookToChapterLens(int chapterNumber)
     {
-        return new OldLens<Book, Chapter>(
+        return new Lens<Book, Chapter>(
             book => book.Chapters.Single(chapter => chapter.Number == chapterNumber),
             (book, updatedChapter) =>
             {
@@ -29,9 +29,9 @@ public static class LibraryLensesSimplified
         );
     }
 
-    public static OldLens<Chapter, Page> ChapterToPageLens(int pageNumber)
+    public static Lens<Chapter, Page> ChapterToPageLens(int pageNumber)
     {
-        return new OldLens<Chapter, Page>(
+        return new Lens<Chapter, Page>(
             chapter => chapter.Pages.Single(page => page.Number == pageNumber),
             (chapter, updatedPage) =>
             {

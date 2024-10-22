@@ -1,4 +1,5 @@
 ﻿using JoanComasFdz.Optics.Lenses;
+using JoanComasFdz.Optics.Lenses.v1;
 using JoanComasFdz.Optics.TestApp.Domain;
 using static JoanComasFdz.Optics.TestApp.HowToUse.v1.LibraryLenses;
 using static JoanComasFdz.Optics.TestApp.UsingHardcodedLensesSimplified.LibraryLensesSimplified;
@@ -24,7 +25,7 @@ public static class CasesUsingHardcodedLensesSimplified
             ]
         );
 
-        return LibraryToBooksLens().Mutate(library, books => [.. books, secondBook]);
+        return LibraryToBooksLens().Update(library, books => [.. books, secondBook]);
     }
 
     public static Library AddChapterToBook(Library library, string bookISDN)
@@ -39,7 +40,7 @@ public static class CasesUsingHardcodedLensesSimplified
 
         return LibraryToBookLens(bookISDN)
             .Compose(BookToChaptersLens())
-            .Mutate(library, chapters => [.. chapters, secondChapter]);
+            .Update(library, chapters => [.. chapters, secondChapter]);
     }
 
     public static Library AddPageToChapterOfBook(Library library, string bookISDN, int chapterNumber)
@@ -47,20 +48,20 @@ public static class CasesUsingHardcodedLensesSimplified
         return LibraryToBookLens(bookISDN)
             .Compose(BookToChapterLens(chapterNumber))
             .Compose(ChapterToPagesLens())
-            .Mutate(library, pages => [.. pages, new Page(2, "Page 2 Content")]);
+            .Update(library, pages => [.. pages, new Page(2, "Page 2 Content")]);
     }
 
     public static Library UpdateBookTitle(Library library, string bookISDN, string newTitle)
     {
         return LibraryToBookLens(bookISDN)
-            .Mutate(library, book => book with { Title = newTitle });
+            .Update(library, book => book with { Title = newTitle });
     }
 
     public static Library UpdateChapterTitleOfBook(Library library, string bookISDN, int chapterNumber, string newTitle)
     {
         return LibraryToBookLens(bookISDN)
             .Compose(BookToChapterLens(chapterNumber))
-            .Mutate(library, chapter => chapter with { Title = newTitle });
+            .Update(library, chapter => chapter with { Title = newTitle });
     }
 
     public static Library UpdatePageContentOfChapterOfBook(Library library, string bookISDN, int chapterNumber, int pageNumber, string newContent)
@@ -68,19 +69,19 @@ public static class CasesUsingHardcodedLensesSimplified
         return LibraryToBookLens(bookISDN)
             .Compose(BookToChapterLens(chapterNumber))
             .Compose(ChapterToPageLens(pageNumber))
-            .Mutate(library, page => page with { Content = newContent });
+            .Update(library, page => page with { Content = newContent });
     }
 
     public static Library RemoveBookFromLibrary(Library library, string bookISDN)
     {
-        return LibraryToBooksLens().Mutate(library, books => books.Where(book => book.ISDN != bookISDN).ToArray());
+        return LibraryToBooksLens().Update(library, books => books.Where(book => book.ISDN != bookISDN).ToArray());
     }
 
     public static Library RemoveChapterFromBook(Library library, string bookISDN, int chapterNumber)
     {
         return LibraryToBookLens(bookISDN)
             .Compose(BookToChaptersLens())
-            .Mutate(library, chapters => chapters.Where(chapter => chapter.Number != chapterNumber).ToArray());
+            .Update(library, chapters => chapters.Where(chapter => chapter.Number != chapterNumber).ToArray());
     }
 
     public static Library RemovePageFromChapterOfBook(Library library, string bookISDN, int chapterNumber, int pageNumber)
@@ -88,6 +89,6 @@ public static class CasesUsingHardcodedLensesSimplified
         return LibraryToBookLens(bookISDN)
             .Compose(BookToChapterLens(chapterNumber))
             .Compose(ChapterToPagesLens())
-            .Mutate(library, pages => pages.Where(page => page.Number != pageNumber).ToArray());
+            .Update(library, pages => pages.Where(page => page.Number != pageNumber).ToArray());
     }
 }
