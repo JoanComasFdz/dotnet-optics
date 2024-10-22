@@ -1,10 +1,10 @@
 ﻿using JoanComasFdz.Optics.TestApp.UsingEnhancedApi;
 using JoanComasFdz.Optics.TestApp.UsingEnhancedApiSimplified;
-using JoanComasFdz.Optics.TestApp.UsingHardcodedLenses;
 using JoanComasFdz.Optics.TestApp.UsingHardcodedLensesSimplified;
 using JoanComasFdz.Optics.TestApp.UsingWiths;
 using JoanComasFdz.Optics.TestApp.Domain;
 using System.Text.Json;
+using JoanComasFdz.Optics.TestApp.HowToUse.v1;
 
 Console.WriteLine("Creating an initial library");
 var library = new Library(

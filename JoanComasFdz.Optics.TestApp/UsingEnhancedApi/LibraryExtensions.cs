@@ -6,7 +6,7 @@ namespace JoanComasFdz.Optics.TestApp.UsingEnhancedApi;
 
 public static class LibraryExtensions
 {
-    public record LensWrapper<TWhole, TPart>(TWhole Whole, Lens<TWhole, TPart> Lens)
+    public record LensWrapper<TWhole, TPart>(TWhole Whole, OldLens<TWhole, TPart> Lens)
     {
         // Method to mutate the part of the object
         public TWhole With(Func<TPart, TPart> transform) => Lens.Mutate(Whole, transform);

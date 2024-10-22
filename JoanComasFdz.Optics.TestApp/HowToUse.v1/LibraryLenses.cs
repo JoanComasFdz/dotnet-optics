@@ -5,27 +5,27 @@ namespace JoanComasFdz.Optics.TestApp.HowToUse.v1;
 
 public static class LibraryLenses
 {
-    public static Lens<Library, IReadOnlyList<Book>> LibraryToBooksLens() => new(
+    public static OldLens<Library, IReadOnlyList<Book>> LibraryToBooksLens() => new(
         library => library.Books,
         (library, newBooks) => library with { Books = newBooks }
     );
 
-    public static Lens<Library, Book> LibraryToBookLens(Func<Book, bool> predicate)
+    public static OldLens<Library, Book> LibraryToBookLens(Func<Book, bool> predicate)
     {
-        return new Lens<Library, Book>(
+        return new OldLens<Library, Book>(
             library => library.Books.Single(predicate),
             (library, updatedBook) => library with { Books = library.Books.Select(book => predicate(book) ? updatedBook : book).ToArray() }
         );
     }
 
-    public static Lens<Book, IReadOnlyList<Chapter>> BookToChaptersLens() => new(
+    public static OldLens<Book, IReadOnlyList<Chapter>> BookToChaptersLens() => new(
         book => book.Chapters,
         (book, newChapters) => book with { Chapters = newChapters }
     );
 
-    public static Lens<Book, Chapter> BookToChapterLens(Func<Chapter, bool> predicate)
+    public static OldLens<Book, Chapter> BookToChapterLens(Func<Chapter, bool> predicate)
     {
-        return new Lens<Book, Chapter>(
+        return new OldLens<Book, Chapter>(
             book => book.Chapters.Single(predicate),
             (book, updatedChapter) =>
             {
@@ -35,14 +35,14 @@ public static class LibraryLenses
         );
     }
 
-    public static Lens<Chapter, IReadOnlyList<Page>> ChapterToPagesLens() => new(
+    public static OldLens<Chapter, IReadOnlyList<Page>> ChapterToPagesLens() => new(
         chapter => chapter.Pages,
         (chapter, newPages) => chapter with { Pages = newPages }
     );
 
-    public static Lens<Chapter, Page> ChapterToPageLens(Func<Page, bool> predicate)
+    public static OldLens<Chapter, Page> ChapterToPageLens(Func<Page, bool> predicate)
     {
-        return new Lens<Chapter, Page>(
+        return new OldLens<Chapter, Page>(
             chapter => chapter.Pages.Single(predicate),
             (chapter, updatedPage) =>
             {
