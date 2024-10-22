@@ -1,5 +1,5 @@
-﻿using JoanComasFdz.Optics.TestApp.UsingEnhancedApiSimplified;
-using JoanComasFdz.Optics.TestApp.Domain;
+﻿using JoanComasFdz.Optics.TestApp.Domain;
+using JoanComasFdz.Optics.TestApp.HowToUse.v1.FluentSimplified;
 
 namespace JoanComasFdz.TestApp.UnitTests;
 

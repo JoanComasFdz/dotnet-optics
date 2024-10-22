@@ -2,7 +2,7 @@
 using JoanComasFdz.Optics.TestApp.Domain;
 using JoanComasFdz.Optics.TestApp.HowToUse.v1.Fluent;
 
-namespace JoanComasFdz.Optics.TestApp.UsingEnhancedApiSimplified;
+namespace JoanComasFdz.Optics.TestApp.HowToUse.v1.FluentSimplified;
 
 public static class CasesUsingEnhancedApiSimplified
 {
@@ -94,6 +94,6 @@ public static class CasesUsingEnhancedApiSimplified
         return library.BookLens(bookISDN)
             .ChapterLens(chapterNumber)
             .PagesLens()
-            .With(pages => pages.Where(page =>  page.Number != pageNumber).ToArray());
+            .With(pages => pages.Where(page => page.Number != pageNumber).ToArray());
     }
 }

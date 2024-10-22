@@ -4,7 +4,7 @@ using JoanComasFdz.Optics.Lenses.v1;
 using JoanComasFdz.Optics.TestApp.HowToUse.v1.Simplified;
 using JoanComasFdz.Optics.Lenses.v1.Fluent;
 
-namespace JoanComasFdz.Optics.TestApp.UsingEnhancedApiSimplified;
+namespace JoanComasFdz.Optics.TestApp.HowToUse.v1.FluentSimplified;
 
 public static class LibraryExtensionsSimplified
 {
