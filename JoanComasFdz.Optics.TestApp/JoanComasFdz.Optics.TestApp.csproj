@@ -12,7 +12,6 @@
     <ProjectReference Include="..\JoanComasFdz.Optics.Lenses.v1\JoanComasFdz.Optics.Lenses.v1.csproj" />
     <ProjectReference Include="..\JoanComasFdz.Optics.Lenses.v2\JoanComasFdz.Optics.Lenses.v2.csproj" />
     <ProjectReference Include="..\JoanComasFdz.Optics.TestApp.Domain\JoanComasFdz.Optics.TestApp.Domain.csproj" />
-    <ProjectReference Include="..\JoanComasFdz.Optics\JoanComasFdz.Optics.csproj" />
   </ItemGroup>
 
 </Project>
