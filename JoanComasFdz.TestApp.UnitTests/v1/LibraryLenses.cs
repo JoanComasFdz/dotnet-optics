@@ -1,7 +1,7 @@
 ﻿using JoanComasFdz.Optics.Lenses.v1;
 using JoanComasFdz.Optics.TestApp.Domain;
 
-namespace JoanComasFdz.Optics.TestApp.HowToUse.v1;
+namespace JoanComasFdz.TestApp.UnitTests.v1;
 
 public static class LibraryLenses
 {
