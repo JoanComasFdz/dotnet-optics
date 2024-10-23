@@ -6,7 +6,7 @@ namespace JoanComasFdz.TestApp.UnitTests.v1;
 
 public class CasesUsingHardcodedLensesTest
 {
-    private Library library = new Library(
+    private readonly Library library = new(
         Name: "Downtown Public Library",
         Address: new Address(
             Street: "456 Oak Street",
