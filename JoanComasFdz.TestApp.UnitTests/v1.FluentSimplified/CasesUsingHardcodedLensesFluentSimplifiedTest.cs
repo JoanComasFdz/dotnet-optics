@@ -1,6 +1,4 @@
 ﻿using JoanComasFdz.Optics.Lenses.v1.Fluent;
-using JoanComasFdz.Optics.TestApp.Domain;
-using static JoanComasFdz.Optics.TestApp.UnitTests.v1.FluentSimplified.LibraryLensesFluentSimplified;
 
 namespace JoanComasFdz.TestApp.UnitTests.v1.FluentSimplified;
 

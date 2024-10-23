@@ -1,5 +1,3 @@
-using JoanComasFdz.Optics.TestApp.Domain;
-
 namespace JoanComasFdz.TestApp.UnitTests;
 
 public class CasesUsingJustWithTest
