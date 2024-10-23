@@ -1,11 +1,12 @@
-﻿using JoanComasFdz.Optics.TestApp.Domain;
-using JoanComasFdz.Optics.TestApp.HowToUse.v1.FluentSimplified;
+﻿using JoanComasFdz.Optics.Lenses.v1.Fluent;
+using JoanComasFdz.Optics.TestApp.Domain;
+using static JoanComasFdz.Optics.TestApp.HowToUse.v1.FluentSimplified.LibraryLensesFluentSimplified;
 
 namespace JoanComasFdz.TestApp.UnitTests.v1;
 
 public class CasesUsingHardcodedLensesFluentSimplifiedTest
 {
-    private Library library = new Library(
+    private readonly Library library = new(
         Name: "Downtown Public Library",
         Address: new Address(
             Street: "456 Oak Street",
@@ -30,89 +31,61 @@ public class CasesUsingHardcodedLensesFluentSimplifiedTest
     );
 
     [Fact]
-    public void AddBookToLibrary_NewLibraryHasNewBook()
+    public void BookLensByISDN_WithNewBook_BookIsCorret()
     {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.AddBookToLibrary(library);
+        var bookISDN = "1234";
 
-        Assert.Equal(2, newLibrary.Books.Count);
-        Assert.Equal("5678", newLibrary.Books.Last().ISDN);
+        var newLibrary = library
+            .BookLens(bookISDN)
+            .With(book => book with { Title = "New book title" });
+
+        Assert.NotNull(newLibrary);
+        Assert.Equal(library.Name, newLibrary.Name);
+        Assert.Equal(library.Books.Count, newLibrary.Books.Count);
+        Assert.Equal(library.Books[0].ISDN, newLibrary.Books[0].ISDN);
+        Assert.Equal(library.Books[0].Author, newLibrary.Books[0].Author);
+        Assert.Equal(library.Books[0].Chapters.Count, newLibrary.Books[0].Chapters.Count);
+        Assert.Equal("New book title", newLibrary.Books[0].Title);
     }
 
     [Fact]
-    public void AddChapterToBook_BookHasNewChapter()
+    public void BookLensByISDN_ChapterLensWithNumber_WithNewChapter_ChapterIsCorret()
     {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.AddChapterToBook(library, "1234");
+        var bookISDN = "1234";
+        var chapterNumber = 1;
 
-        var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
-        Assert.Equal(2, updatedBook.Chapters.Count);
-        Assert.Equal("First Algorithms", updatedBook.Chapters.Last().Title);
+        var newLibrary = library
+            .BookLens(bookISDN)
+            .ChapterLens(chapterNumber)
+            .With(chapter => chapter with { Title = "New chapter title" });
+
+        Assert.NotNull(newLibrary);
+        Assert.Equal(library.Name, newLibrary.Name);
+        Assert.Equal(library.Books.Count, newLibrary.Books.Count);
+        Assert.Equal(library.Books[0].Chapters.Count, newLibrary.Books[0].Chapters.Count);
+        Assert.Equal(library.Books[0].Chapters[0].Number, newLibrary.Books[0].Chapters[0].Number);
+        Assert.Equal("New chapter title", newLibrary.Books[0].Chapters[0].Title);
     }
 
     [Fact]
-    public void AddPageToChapterOfBook_ChapterHasNewPage()
+    public void BookLensByISDN_ChapterLensWithNumber_PageLensByNumber_WithNewPage_PageIsCorret()
     {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.AddPageToChapterOfBook(library, "1234", 1);
+        var bookISDN = "1234";
+        var chapterNumber = 1;
+        var pageNumber = 1;
 
-        var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
-        var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
-        Assert.Equal(2, updatedChapter.Pages.Count);
-        Assert.Equal("Page 2 Content", updatedChapter.Pages.Last().Content);
-    }
+        var newLibrary = library
+            .BookLens(bookISDN)
+            .ChapterLens(chapterNumber)
+            .PageLens(pageNumber)
+            .With(page => page with { Content = "New page content" });
 
-    [Fact]
-    public void UpdateBookTitle_BookTitleIsUpdated()
-    {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.UpdateBookTitle(library, "1234", "Program nicely");
-
-        var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
-        Assert.Equal("Program nicely", updatedBook.Title);
-    }
-
-    [Fact]
-    public void UpdateChapterTitleOfBook_ChapterTitleIsUpdated()
-    {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.UpdateChapterTitleOfBook(library, "1234", 1, "Advanced Algorithms");
-
-        var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
-        var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
-        Assert.Equal("Advanced Algorithms", updatedChapter.Title);
-    }
-
-    [Fact]
-    public void UpdatePageContentOfChapterOfBook_PageContentIsUpdated()
-    {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.UpdatePageContentOfChapterOfBook(library, "1234", 1, 1, "Updated Content");
-
-        var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
-        var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
-        var updatedPage = updatedChapter.Pages.Single(p => p.Number == 1);
-        Assert.Equal("Updated Content", updatedPage.Content);
-    }
-
-    [Fact]
-    public void RemoveBookFromLibrary_BookIsRemoved()
-    {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.RemoveBookFromLibrary(library, "1234");
-
-        Assert.Empty(newLibrary.Books);
-    }
-
-    [Fact]
-    public void RemoveChapterFromBook_ChapterIsRemoved()
-    {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.RemoveChapterFromBook(library, "1234", 1);
-
-        var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
-        Assert.Empty(updatedBook.Chapters);
-    }
-
-    [Fact]
-    public void RemovePageFromChapterOfBook_PageIsRemoved()
-    {
-        var newLibrary = CasesUsingHardcodedLensesFluentSimplified.RemovePageFromChapterOfBook(library, "1234", 1, 1);
-
-        var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
-        var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
-        Assert.Empty(updatedChapter.Pages);
+        Assert.NotNull(newLibrary);
+        Assert.Equal(library.Name, newLibrary.Name);
+        Assert.Equal(library.Books.Count, newLibrary.Books.Count);
+        Assert.Equal(library.Books[0].Chapters.Count, newLibrary.Books[0].Chapters.Count);
+        Assert.Equal(library.Books[0].Chapters[0].Pages.Count, newLibrary.Books[0].Chapters[0].Pages.Count);
+        Assert.Equal(library.Books[0].Chapters[0].Pages[0].Number, newLibrary.Books[0].Chapters[0].Pages[0].Number);
+        Assert.Equal("New page content", newLibrary.Books[0].Chapters[0].Pages[0].Content);
     }
 }
