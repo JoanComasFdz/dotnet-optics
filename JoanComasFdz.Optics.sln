@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.Lenses.v1", "JoanComasFdz.Optics.Lenses.v1\JoanComasFdz.Optics.Lenses.v1.csproj", "{C49C898B-038F-4E59-8776-8C510E52AA9B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.TestApp.UnitTests", "JoanComasFdz.TestApp.UnitTests\JoanComasFdz.TestApp.UnitTests.csproj", "{4BE80D16-0C79-477A-BFC0-DA9591BED5F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.Usage.UnitTests", "JoanComasFdz.Optics.Usage.UnitTests\JoanComasFdz.Optics.Usage.UnitTests.csproj", "{4BE80D16-0C79-477A-BFC0-DA9591BED5F0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoanComasFdz.Optics.Lenses.v2.UnitTests", "JoanComasFdz.Optics.Lenses.v2.UnitTests\JoanComasFdz.Optics.Lenses.v2.UnitTests.csproj", "{6706C0B7-703A-4E05-A290-669B70D39F68}"
 EndProject

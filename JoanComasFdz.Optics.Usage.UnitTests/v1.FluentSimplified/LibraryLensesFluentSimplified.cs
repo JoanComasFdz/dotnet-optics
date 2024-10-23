@@ -1,8 +1,8 @@
 ﻿using JoanComasFdz.Optics.Lenses.v1;
-using JoanComasFdz.TestApp.UnitTests.v1.Simplified;
+using JoanComasFdz.Optics.Usage.UnitTests.v1.Simplified;
 using JoanComasFdz.Optics.Lenses.v1.Fluent;
 
-namespace JoanComasFdz.TestApp.UnitTests.v1.FluentSimplified;
+namespace JoanComasFdz.Optics.Usage.UnitTests.v1.FluentSimplified;
 
 public static class LibraryLensesFluentSimplified
 {

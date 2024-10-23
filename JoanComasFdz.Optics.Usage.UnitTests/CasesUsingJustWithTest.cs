@@ -1,4 +1,4 @@
-namespace JoanComasFdz.TestApp.UnitTests;
+namespace JoanComasFdz.Optics.Usage.UnitTests;
 
 public class CasesUsingJustWithTest
 {

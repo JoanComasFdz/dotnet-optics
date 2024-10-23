@@ -1,4 +1,4 @@
-﻿namespace JoanComasFdz.TestApp.UnitTests;
+﻿namespace JoanComasFdz.Optics.Usage.UnitTests;
 
 public record Library(string Name, Address Address, IReadOnlyList<Book> Books);
 public record Address(string Street, string City, string PostalCode);

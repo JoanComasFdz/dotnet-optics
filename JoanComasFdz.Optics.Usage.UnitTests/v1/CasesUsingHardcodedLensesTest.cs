@@ -1,9 +1,9 @@
-﻿using static JoanComasFdz.TestApp.UnitTests.v2.LibraryLenses;
-using JoanComasFdz.Optics.Lenses.v2;
+﻿using JoanComasFdz.Optics.Lenses.v1;
+using static JoanComasFdz.Optics.Usage.UnitTests.v1.LibraryLenses;
 
-namespace JoanComasFdz.TestApp.UnitTests.v2;
+namespace JoanComasFdz.Optics.Usage.UnitTests.v1;
 
-public class CasesUsingHardcodedLensTest
+public class CasesUsingHardcodedLensesTest
 {
     private readonly Library library = new(
         Name: "Downtown Public Library",
@@ -50,12 +50,13 @@ public class CasesUsingHardcodedLensTest
         var newLibrary = LibraryToBooksLens().Update(library, books => [.. books, secondBook]);
 
         Assert.Equal(2, newLibrary.Books.Count);
-        Assert.Equal("5678", newLibrary.Books[1].ISDN);
+        Assert.Equal("5678", newLibrary.Books.Last().ISDN);
     }
 
     [Fact]
     public void AddChapterToBook_BookHasNewChapter()
     {
+        var bookISDN = "1234";
         var secondChapter = new Chapter(
             Number: 2,
             Title: "First Algorithms",
@@ -64,68 +65,83 @@ public class CasesUsingHardcodedLensTest
             ]
         );
 
-        var newLibrary = LibraryToBookLens("1234")
+        var newLibrary = LibraryToBookLens(book => book.ISDN == bookISDN)
             .Compose(BookToChaptersLens())
             .Update(library, chapters => [.. chapters, secondChapter]);
 
-        var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
+        var updatedBook = newLibrary.Books.Single(b => b.ISDN == bookISDN);
         Assert.Equal(2, updatedBook.Chapters.Count);
-        Assert.Equal("First Algorithms", updatedBook.Chapters[1].Title);
+        Assert.Equal("First Algorithms", updatedBook.Chapters.Last().Title);
     }
 
     [Fact]
     public void AddPageToChapterOfBook_ChapterHasNewPage()
     {
-        var newLibrary = LibraryToBookLens("1234")
-            .Compose(BookToChapterLens(1))
+        var bookISDN = "1234";
+        var chapterNumber = 1;
+
+        var newLibrary = LibraryToBookLens(book => book.ISDN == bookISDN)
+            .Compose(BookToChapterLens(chapter => chapter.Number == chapterNumber))
             .Compose(ChapterToPagesLens())
             .Update(library, pages => [.. pages, new Page(2, "Page 2 Content")]);
 
-        var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
-        var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
+        var updatedBook = newLibrary.Books.Single(b => b.ISDN == bookISDN);
+        var updatedChapter = updatedBook.Chapters.Single(c => c.Number == chapterNumber);
         Assert.Equal(2, updatedChapter.Pages.Count);
-        Assert.Equal("Page 2 Content", updatedChapter.Pages[1].Content);
+        Assert.Equal("Page 2 Content", updatedChapter.Pages.Last().Content);
     }
 
     [Fact]
     public void UpdateBookTitle_BookTitleIsUpdated()
     {
-        var newLibrary = LibraryToBookLens("1234").Update(library, book => book with { Title = "Program nicely" });
+        var bookISDN = "1234";
 
-        var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
+        var newLibrary = LibraryToBookLens(book => book.ISDN == bookISDN)
+            .Update(library, book => book with { Title = "Program nicely" });
+
+        var updatedBook = newLibrary.Books.Single(b => b.ISDN == bookISDN);
         Assert.Equal("Program nicely", updatedBook.Title);
     }
 
     [Fact]
     public void UpdateChapterTitleOfBook_ChapterTitleIsUpdated()
     {
-        var newLibrary = LibraryToBookLens("1234")
-            .Compose(BookToChapterLens(1))
+        var bookISDN = "1234";
+        var chapterNumber = 1;
+
+        var newLibrary = LibraryToBookLens(book => book.ISDN == bookISDN)
+            .Compose(BookToChapterLens(chapter => chapter.Number == chapterNumber))
             .Update(library, chapter => chapter with { Title = "Advanced Algorithms" });
 
-        var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
-        var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
+        var updatedBook = newLibrary.Books.Single(b => b.ISDN == bookISDN);
+        var updatedChapter = updatedBook.Chapters.Single(c => c.Number == chapterNumber);
         Assert.Equal("Advanced Algorithms", updatedChapter.Title);
     }
 
     [Fact]
     public void UpdatePageContentOfChapterOfBook_PageContentIsUpdated()
     {
-        var newLibrary = LibraryToBookLens("1234")
-            .Compose(BookToChapterLens(1))
-            .Compose(ChapterToPageLens(1))
+        var bookISDN = "1234";
+        var chapterNumber = 1;
+        var pageNumber = 1;
+
+        var newLibrary = LibraryToBookLens(book => book.ISDN == bookISDN)
+            .Compose(BookToChapterLens(chapter => chapter.Number == pageNumber))
+            .Compose(ChapterToPageLens(page => page.Number == chapterNumber))
             .Update(library, page => page with { Content = "Updated Content" });
 
-        var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
-        var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
-        var updatedPage = updatedChapter.Pages.Single(p => p.Number == 1);
+        var updatedBook = newLibrary.Books.Single(b => b.ISDN == bookISDN);
+        var updatedChapter = updatedBook.Chapters.Single(c => c.Number == chapterNumber);
+        var updatedPage = updatedChapter.Pages.Single(p => p.Number == pageNumber);
         Assert.Equal("Updated Content", updatedPage.Content);
     }
 
     [Fact]
     public void RemoveBookFromLibrary_BookIsRemoved()
     {
-        var newLibrary = LibraryToBooksLens().Update(library, books => books.Where(book => book.ISDN != "1234").ToArray());
+        var bookISDN = "1234";
+
+        var newLibrary = LibraryToBooksLens().Update(library, books => books.Where(book => book.ISDN != bookISDN).ToArray());
 
         Assert.Empty(newLibrary.Books);
     }
@@ -133,24 +149,30 @@ public class CasesUsingHardcodedLensTest
     [Fact]
     public void RemoveChapterFromBook_ChapterIsRemoved()
     {
-        var newLibrary = LibraryToBookLens("1234")
-            .Compose(BookToChaptersLens())
-            .Update(library, chapters => chapters.Where(chapter => chapter.Number != 1).ToArray());
+        var bookISDN = "1234";
+        var chapterNumber = 1;
 
-        var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
+        var newLibrary = LibraryToBookLens(book => book.ISDN == bookISDN)
+            .Compose(BookToChaptersLens())
+            .Update(library, chapters => chapters.Where(chapter => chapter.Number != chapterNumber).ToArray());
+
+        var updatedBook = newLibrary.Books.Single(b => b.ISDN == bookISDN);
         Assert.Empty(updatedBook.Chapters);
     }
 
     [Fact]
     public void RemovePageFromChapterOfBook_PageIsRemoved()
     {
-        var newLibrary = LibraryToBookLens("1234")
-            .Compose(BookToChapterLens(1))
+        var bookISDN = "1234";
+        var chapterNumber = 1;
+        var pageNumber = 1;
+        var newLibrary = LibraryToBookLens(book => book.ISDN == bookISDN)
+            .Compose(BookToChapterLens(chapter => chapter.Number == chapterNumber))
             .Compose(ChapterToPagesLens())
-            .Update(library, pages => pages.Where(page => page.Number != 1).ToArray());
+            .Update(library, pages => pages.Where(page => page.Number != pageNumber).ToArray());
 
-        var updatedBook = newLibrary.Books.Single(b => b.ISDN == "1234");
-        var updatedChapter = updatedBook.Chapters.Single(c => c.Number == 1);
+        var updatedBook = newLibrary.Books.Single(b => b.ISDN == bookISDN);
+        var updatedChapter = updatedBook.Chapters.Single(c => c.Number == pageNumber);
         Assert.Empty(updatedChapter.Pages);
     }
 }

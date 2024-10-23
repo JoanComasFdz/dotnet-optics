@@ -1,7 +1,7 @@
 ﻿using JoanComasFdz.Optics.Lenses.v1;
 using JoanComasFdz.Optics.Lenses.v1.Fluent;
 
-namespace JoanComasFdz.TestApp.UnitTests.v1.Fluent;
+namespace JoanComasFdz.Optics.Usage.UnitTests.v1.Fluent;
 
 public static class LibraryLensesFluent
 {

@@ -1,6 +1,6 @@
 ﻿using JoanComasFdz.Optics.Lenses.v1.Fluent;
 
-namespace JoanComasFdz.TestApp.UnitTests.v1.FluentSimplified;
+namespace JoanComasFdz.Optics.Usage.UnitTests.v1.FluentSimplified;
 
 public class CasesUsingHardcodedLensesFluentSimplifiedTest
 {
