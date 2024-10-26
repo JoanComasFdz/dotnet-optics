@@ -140,7 +140,7 @@ Then, whenever you need to update a nested property (let's say in a RUD operatio
 ## Future work
 - [x] Add examples to remove items from collections.
 - [x] Further enhance the API to pass only the actual item to be filtered by, like: `library.BookLens(bookISDN)`.
-- [ ] Investigate simplifying lens declaration: https://stackoverflow.com/questions/68012124/record-lenses-expression-tree-for-with-expression
+- [x] Investigate simplifying lens declaration: https://stackoverflow.com/questions/68012124/record-lenses-expression-tree-for-with-expression
 - [x] Add a unit testing project.
 - [ ] Use Source Generators to automatically create the lenses when a `record` is marked with an attribute like `[Lenses]`, like: https://github.com/Tinkoff/Visor
 - [ ] Add more methods in the enhcaned API to play with collections (`Add(T item)`, `Remove(T item)`).
