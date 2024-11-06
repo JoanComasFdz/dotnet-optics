@@ -6,8 +6,10 @@ public class CasesUsingJustWithTest
         Name: "Downtown Public Library",
         Address: new Address(
             Street: "456 Oak Street",
-            City: "Metropolis",
-            PostalCode: "67890"
+            Location: new Location(
+                City:    "Metropolis",
+                PostalCode: "67890"
+            )
         ),
         Books: [
             new Book(

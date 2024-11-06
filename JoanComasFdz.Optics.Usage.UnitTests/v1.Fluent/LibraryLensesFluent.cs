@@ -5,6 +5,27 @@ namespace JoanComasFdz.Optics.Usage.UnitTests.v1.Fluent;
 
 public static class LibraryLensesFluent
 {
+    public static LensWrapper<Library, Address> AddressLens(this Library library)
+    {
+        var addressLens = new Lens<Library, Address>(
+            library => library.Address,
+            (library, newAddress) => library with { Address = newAddress }
+        );
+        return new LensWrapper<Library, Address>(library, addressLens);
+    }
+
+    public static LensWrapper<Library, Location> LocationLens(this LensWrapper<Library, Address> wrapper)
+    {
+        var locationLens = new Lens<Address, Location>(
+            address => address.Location,
+            (address, newLocation) => address with { Location = newLocation }
+            );
+
+        var composedLens = wrapper.Lens.Compose(locationLens);
+
+        return new LensWrapper<Library, Location>(wrapper.Whole, composedLens);
+    }
+
     public static LensWrapper<Library, IReadOnlyList<Book>> BooksLens(this Library library)
     {
         var booksLens = LibraryLenses.LibraryToBooksLens();
