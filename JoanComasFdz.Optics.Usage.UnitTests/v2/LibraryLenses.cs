@@ -4,7 +4,7 @@ namespace JoanComasFdz.Optics.Usage.UnitTests.v2;
 
 public static class LibraryLenses
 {
-    public static Lens<Library, Address> LibraryToAddres()
+    public static Lens<Library, Address> LibraryToAddress()
         => Lens<Library, Address>.Create(library => library.Address);
 
     public static Lens<Library, IReadOnlyList<Book>> LibraryToBooksLens()
