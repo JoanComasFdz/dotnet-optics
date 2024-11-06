@@ -35,7 +35,7 @@ public class CasesUsingHardcodedLensesFluentSimplifiedTest
 
         var newLibrary = library
             .BookLens(bookISDN)
-            .With(book => book with { Title = "New book title" });
+            .Update(book => book with { Title = "New book title" });
 
         Assert.NotNull(newLibrary);
         Assert.Equal(library.Name, newLibrary.Name);
@@ -55,7 +55,7 @@ public class CasesUsingHardcodedLensesFluentSimplifiedTest
         var newLibrary = library
             .BookLens(bookISDN)
             .ChapterLens(chapterNumber)
-            .With(chapter => chapter with { Title = "New chapter title" });
+            .Update(chapter => chapter with { Title = "New chapter title" });
 
         Assert.NotNull(newLibrary);
         Assert.Equal(library.Name, newLibrary.Name);
@@ -76,7 +76,7 @@ public class CasesUsingHardcodedLensesFluentSimplifiedTest
             .BookLens(bookISDN)
             .ChapterLens(chapterNumber)
             .PageLens(pageNumber)
-            .With(page => page with { Content = "New page content" });
+            .Update(page => page with { Content = "New page content" });
 
         Assert.NotNull(newLibrary);
         Assert.Equal(library.Name, newLibrary.Name);

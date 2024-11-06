@@ -48,7 +48,7 @@ public class CasesUsingHardcodedLensesFluentTest
 
         var newLibrary = library
             .BooksLens()
-            .With(books => [.. books, secondBook]);
+            .Update(books => [.. books, secondBook]);
 
         Assert.Equal(2, newLibrary.Books.Count);
         Assert.Equal("5678", newLibrary.Books.Last().ISDN);
@@ -69,7 +69,7 @@ public class CasesUsingHardcodedLensesFluentTest
         var newLibrary = library
             .BookLens(book => book.ISDN == bookISDN)
             .ChaptersLens()
-            .With(chapters => [.. chapters, secondChapter]);
+            .Update(chapters => [.. chapters, secondChapter]);
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == bookISDN);
         Assert.Equal(2, updatedBook.Chapters.Count);
@@ -86,7 +86,7 @@ public class CasesUsingHardcodedLensesFluentTest
             .BookLens(book => book.ISDN == bookISDN)
             .ChapterLens(chapter => chapter.Number == chapterNumber)
             .PagesLens()
-            .With(pages => [.. pages, new Page(2, "Page 2 Content")]);
+            .Update(pages => [.. pages, new Page(2, "Page 2 Content")]);
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == bookISDN);
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == chapterNumber);
@@ -102,7 +102,7 @@ public class CasesUsingHardcodedLensesFluentTest
 
         var newLibrary = library
             .BookLens(book => book.ISDN == bookISDN)
-            .With(book => book with { Title = newTitle });
+            .Update(book => book with { Title = newTitle });
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == bookISDN);
         Assert.Equal(newTitle, updatedBook.Title);
@@ -118,7 +118,7 @@ public class CasesUsingHardcodedLensesFluentTest
         var newLibrary = library
             .BookLens(book => book.ISDN == bookISDN)
             .ChapterLens(chapter => chapter.Number == chapterNumber)
-            .With(chapter => chapter with { Title = newTitle });
+            .Update(chapter => chapter with { Title = newTitle });
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == bookISDN);
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == chapterNumber);
@@ -137,7 +137,7 @@ public class CasesUsingHardcodedLensesFluentTest
             .BookLens(book => book.ISDN == bookISDN)
             .ChapterLens(chapter => chapter.Number == chapterNumber)
             .PageLens(page => page.Number == pageNumber)
-            .With(page => page with { Content = newContent });
+            .Update(page => page with { Content = newContent });
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == bookISDN);
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == chapterNumber);
@@ -150,7 +150,7 @@ public class CasesUsingHardcodedLensesFluentTest
     {
         var bookISDN = "1234";
 
-        var newLibrary = library.BooksLens().With(books => books.Where(book => book.ISDN != bookISDN).ToArray());
+        var newLibrary = library.BooksLens().Update(books => books.Where(book => book.ISDN != bookISDN).ToArray());
 
         Assert.Empty(newLibrary.Books);
     }
@@ -163,7 +163,7 @@ public class CasesUsingHardcodedLensesFluentTest
 
         var newLibrary = library.BookLens(book => book.ISDN == bookISDN)
             .ChaptersLens()
-            .With(chapers => chapers.Where(chapter => chapter.Number != chapterNumber).ToArray());
+            .Update(chapers => chapers.Where(chapter => chapter.Number != chapterNumber).ToArray());
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == bookISDN);
         Assert.Empty(updatedBook.Chapters);
@@ -179,7 +179,7 @@ public class CasesUsingHardcodedLensesFluentTest
         var newLibrary = library.BookLens(book => book.ISDN == bookISDN)
             .ChapterLens(chapter => chapter.Number == chapterNumber)
             .PagesLens()
-            .With(pages => pages.Where(page => page.Number != pageNumber).ToArray());
+            .Update(pages => pages.Where(page => page.Number != pageNumber).ToArray());
 
         var updatedBook = newLibrary.Books.Single(b => b.ISDN == bookISDN);
         var updatedChapter = updatedBook.Chapters.Single(c => c.Number == chapterNumber);
