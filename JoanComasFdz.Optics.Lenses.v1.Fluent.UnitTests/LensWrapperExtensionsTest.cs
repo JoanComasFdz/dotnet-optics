@@ -7,7 +7,7 @@ public class LensWrapperExtensionsTest
     public record C(string PropertyOfC);    // Second level nesting. Contains: primitive type.
 
     [Fact]
-    public void Test1()
+    public void Wrapper_InstanceAndLens_WithbHasNewId_ReturnsNewAWithNewBId()
     {
         var a = new A(11, new B("22", new C("I am C")));
         var aToBLens = new Lens<A, B>(

@@ -16,4 +16,6 @@ var newLibrary = library
     .With(chapter => chapter with { Number = 2});
 ```
 
+> To focus on the fluent aspect, the `LibraryLensesFluent.cs` uses the existing lenses from .v1.
+
 `CasesUsingHardcodedLensesFluent.cs` contains a set of methods with real world examples of how a developer should use the lenses.
