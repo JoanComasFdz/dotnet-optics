@@ -1,15 +1,37 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace JoanComasFdz.Optics.Lenses.v1.SourceGenerated;
 
+public static class GeneratorExecutionContextDiagnosticExtensions
+{
+    // Create a DiagnosticDescriptor for an informational message
+    public static void Info(this GeneratorExecutionContext context, string message)
+    {
+        var descriptor = new DiagnosticDescriptor(
+            id: "LensSourceGeneratorInfo",
+            title: "Lens Source Generator Info",
+            messageFormat: message,
+            category: "SourceGenerator",
+            DiagnosticSeverity.Warning,
+            isEnabledByDefault: true);
+
+        var diagnostic = Diagnostic.Create(descriptor, Location.None);
+
+        context.ReportDiagnostic(diagnostic);
+    }
+}
+
 [Generator]
 public class LensSourceGenerator : ISourceGenerator
 {
+    internal static GeneratorExecutionContext? GeneratorExecutionContext;
+
     public void Initialize(GeneratorInitializationContext context)
     {
         context.RegisterForPostInitialization(ctx => ctx.AddSource("LensesAttribute.g.cs", SourceText.From(LensesAttributeCode.Attribute, Encoding.UTF8)));
@@ -22,6 +44,8 @@ public class LensSourceGenerator : ISourceGenerator
         if (context.SyntaxReceiver is not LensesSyntaxReceiver receiver)
             return;
 
+        GeneratorExecutionContext = context;
+
         foreach (var typeDeclaration in receiver.CandidateTypes)
         {
             var semanticModel = context.Compilation.GetSemanticModel(typeDeclaration.SyntaxTree);
@@ -31,12 +55,15 @@ public class LensSourceGenerator : ISourceGenerator
 
             // Generate the lenses for this type
             var sourceText = GenerateLensClass(typeSymbol);
+
+            // Create the csharp file
             context.AddSource($"{typeSymbol.Name}Lenses.g.cs", SourceText.From(sourceText, Encoding.UTF8));
         }
     }
 
     private static string GenerateLensClass(INamedTypeSymbol typeSymbol)
     {
+        GeneratorExecutionContext?.Info($"Creating lense for {typeSymbol.ToDisplayString()}...");
         var namespaceName = typeSymbol.ContainingNamespace.ToDisplayString();
         var typeName = typeSymbol.Name;
         var className = $"{typeName}Lenses";
@@ -64,11 +91,15 @@ public class LensSourceGenerator : ISourceGenerator
             sb.AppendLine("}");
         }
 
-        return sb.ToString();
+        var lensClassContent = sb.ToString();
+        GeneratorExecutionContext?.Info($"Lens class created:{lensClassContent.Replace(Environment.NewLine, string.Empty)}");
+        return lensClassContent;
     }
 
     private static void GenerateLensMethodsForRootType(INamedTypeSymbol typeSymbol, StringBuilder sb, string rootTypeName)
     {
+        GeneratorExecutionContext?.Info($"Creating lenses for {rootTypeName}...");
+
         var properties = typeSymbol.GetMembers()
             .OfType<IPropertySymbol>()
             .Where(p => p.Name != "EqualityContract" && !ShouldSkipLens(p.Type))
@@ -99,6 +130,8 @@ public class LensSourceGenerator : ISourceGenerator
 
     private static void GenerateLensMethodsForNestedType(INamedTypeSymbol typeSymbol, StringBuilder sb, string rootTypeName, string parentTypeName, string parentPropertyName)
     {
+        GeneratorExecutionContext?.Info($"Creating lenses for {parentTypeName}...");
+
         var properties = typeSymbol.GetMembers()
             .OfType<IPropertySymbol>()
             .Where(p => p.Name != "EqualityContract" && !ShouldSkipLens(p.Type))
@@ -135,15 +168,18 @@ public class LensSourceGenerator : ISourceGenerator
         {
             if (namedType.IsValueType || namedType.SpecialType != SpecialType.None)
             {
+                GeneratorExecutionContext?.Info($"Skipped {namedType.ToDisplayString()}: IsValueType = {namedType.IsValueType}, SpecitalType = {namedType.SpecialType}");
                 return true;
             }
 
             if (namedType.ContainingNamespace.ToDisplayString().StartsWith("System."))
             {
+                GeneratorExecutionContext?.Info($"Skipped {namedType.ToDisplayString()}: Namespace = {namedType.ContainingNamespace.ToDisplayString()}");
                 return true;
             }
         }
 
+        GeneratorExecutionContext?.Info($"Taking into account {typeSymbol.ToDisplayString()}.");
         return false;
     }
 
@@ -161,6 +197,8 @@ public class LensSourceGenerator : ISourceGenerator
                     CandidateTypes.Add(typeDeclarationSyntax);
                 }
             }
+
+            GeneratorExecutionContext?.Info($"Found candidate types: {string.Join(Environment.NewLine, CandidateTypes)}");
         }
     }
 }
