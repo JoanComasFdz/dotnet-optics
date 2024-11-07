@@ -3,17 +3,17 @@ using JoanComasFdz.Optics.Lenses.v1.Fluent;
 namespace JoanComasFdz.Optics.Lenses.v1.SourceGenerated.IntegrationTests;
 
 [Lenses]
-public record A(int Id, B B);
-public record B(int Value, C C);
-public record C(int Count, D D);
-public record D(int Counter);
+public record A1(int Id, B1 B);
+public record B1(int Value, C1 C);
+public record C1(int Count, D1 D);
+public record D1(int Counter);
 
-public class TypeInNameSpace_LensesForNestedfSingleTypes_Test
+public class TypeInNameSpaceLensesForNestedfSingleTypesTest
 {
     [Fact]
     public void BLens__Update_ReturnsNewAWithUpdatedBId()
     {
-        var a1 = new A(11, new B(22, new C(33, new D(44))));
+        var a1 = new A1(11, new B1(22, new C1(33, new D1(44))));
         var a2 = a1.BLens().Update(b => b with { Value = 55 });
 
         Assert.NotNull(a2);
@@ -24,7 +24,7 @@ public class TypeInNameSpace_LensesForNestedfSingleTypes_Test
     [Fact]
     public void CLens_Update_ReturnsNewAWithUpdatedCPropertyOfC()
     {
-        var a1 = new A(11, new B(22, new C(33, new D(44))));
+        var a1 = new A1(11, new B1(22, new C1(33, new D1(44))));
         var a2 = a1
             .BLens()
             .CLens()
@@ -41,7 +41,7 @@ public class TypeInNameSpace_LensesForNestedfSingleTypes_Test
     [Fact]
     public void DLens_Update_ReturnsNewAWithUpdatedDId()
     {
-        var a1 = new A(11, new B(22, new C(33, new D(44))));
+        var a1 = new A1(11, new B1(22, new C1(33, new D1(44))));
         var a2 = a1
             .BLens()
             .CLens()
