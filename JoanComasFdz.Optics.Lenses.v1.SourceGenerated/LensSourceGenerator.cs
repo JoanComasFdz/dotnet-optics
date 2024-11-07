@@ -66,6 +66,7 @@ public class LensSourceGenerator : ISourceGenerator
         GeneratorExecutionContext?.Info($"Creating lense for {typeSymbol.ToDisplayString()}...");
         var namespaceName = typeSymbol.ContainingNamespace.ToDisplayString();
         var typeName = typeSymbol.Name;
+        var fullTypeName = typeSymbol.ToDisplayString();
         var className = $"{typeName}Lenses";
 
         var sb = new StringBuilder();
@@ -82,7 +83,7 @@ public class LensSourceGenerator : ISourceGenerator
         sb.AppendLine($"    public static class {className}");
         sb.AppendLine("    {");
 
-        GenerateLensMethodsForRootType(typeSymbol, sb, typeName);
+        GenerateLensMethodsForRootType(typeSymbol, sb, fullTypeName);
 
         sb.AppendLine("    }");
 
