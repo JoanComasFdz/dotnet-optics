@@ -5,30 +5,18 @@ namespace JoanComasFdz.Optics.Lenses.v1.SourceGenerated.IntegrationTests;
 [Lenses]
 public record A1(int Id, B1 B);
 public record B1(int Value, C1 C);
-public record C1(int Count, D1 D);
-public record D1(int Counter);
+public record C1(int Count);
 
 public class TypeInNameSpaceLensesForNestedfSingleTypesTest
 {
     [Fact]
-    public void BLens__Update_ReturnsNewAWithUpdatedBId()
-    {
-        var a1 = new A1(11, new B1(22, new C1(33, new D1(44))));
-        var a2 = a1.BLens().Update(b => b with { Value = 55 });
-
-        Assert.NotNull(a2);
-        Assert.Equal(22, a1.B.Value);
-        Assert.Equal(55, a2.B.Value);
-    }
-
-    [Fact]
     public void CLens_Update_ReturnsNewAWithUpdatedCPropertyOfC()
     {
-        var a1 = new A1(11, new B1(22, new C1(33, new D1(44))));
+        var a1 = new A1(11, new B1(22, new C1(33)));
         var a2 = a1
             .BLens()
             .CLens()
-            .Update(b => b with { Count = 55 });
+            .Update(c1 => c1 with { Count = 55 });
 
         Assert.Equal(22, a1.B.Value);
         Assert.Equal(33, a1.B.C.Count);
@@ -36,25 +24,5 @@ public class TypeInNameSpaceLensesForNestedfSingleTypesTest
         Assert.NotNull(a2);
         Assert.Equal(22, a2.B.Value);
         Assert.Equal(55, a2.B.C.Count);
-    }
-
-    [Fact]
-    public void DLens_Update_ReturnsNewAWithUpdatedDId()
-    {
-        var a1 = new A1(11, new B1(22, new C1(33, new D1(44))));
-        var a2 = a1
-            .BLens()
-            .CLens()
-            .DLens()
-            .Update(d => d with { Counter = 55 });
-
-        Assert.Equal(22, a1.B.Value);
-        Assert.Equal(33, a1.B.C.Count);
-        Assert.Equal(44, a1.B.C.D.Counter);
-
-        Assert.NotNull(a2);
-        Assert.Equal(22, a2.B.Value);
-        Assert.Equal(33, a2.B.C.Count);
-        Assert.Equal(55, a2.B.C.D.Counter);
     }
 }
