@@ -54,7 +54,9 @@ public static class LibraryLensesFluent
     public static LensWrapper<Library, Chapter> ChapterLens(this LensWrapper<Library, Book> wrapper, Func<Chapter, bool> predicate)
     {
         // Create the lens for accessing the Chapter within the Book
-        var chapterLens = LibraryLenses.BookToChapterLens(predicate);
+        var chapterLens = new Lens<Book, Chapter>(
+            book => book.Chapters.Single(predicate),
+            (book, updatedChapter) => book with { Chapters = book.Chapters.Select(chapter => predicate(chapter) ? updatedChapter : chapter).ToArray() });
 
         // Compose the current Lens (from Library to Book) with the new Lens (from Book to Chapter)
         var composedLens = wrapper.Lens.Compose(chapterLens);
